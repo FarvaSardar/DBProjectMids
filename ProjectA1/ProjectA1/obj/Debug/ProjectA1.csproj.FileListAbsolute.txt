@@ -1,0 +1,14 @@
+E:\6th Semester\DBMS\Lab\Mid Term Exams project\ProjectA1\ProjectA1\bin\Debug\ProjectA1.exe.config
+E:\6th Semester\DBMS\Lab\Mid Term Exams project\ProjectA1\ProjectA1\bin\Debug\ProjectA1.exe
+E:\6th Semester\DBMS\Lab\Mid Term Exams project\ProjectA1\ProjectA1\bin\Debug\ProjectA1.pdb
+E:\6th Semester\DBMS\Lab\Mid Term Exams project\ProjectA1\ProjectA1\obj\Debug\ProjectA1.csprojResolveAssemblyReference.cache
+E:\6th Semester\DBMS\Lab\Mid Term Exams project\ProjectA1\ProjectA1\obj\Debug\ProjectA1.Person.resources
+E:\6th Semester\DBMS\Lab\Mid Term Exams project\ProjectA1\ProjectA1\obj\Debug\ProjectA1.Properties.Resources.resources
+E:\6th Semester\DBMS\Lab\Mid Term Exams project\ProjectA1\ProjectA1\obj\Debug\ProjectA1.csproj.GenerateResource.Cache
+E:\6th Semester\DBMS\Lab\Mid Term Exams project\ProjectA1\ProjectA1\obj\Debug\ProjectA1.exe
+E:\6th Semester\DBMS\Lab\Mid Term Exams project\ProjectA1\ProjectA1\obj\Debug\ProjectA1.pdb
+E:\6th Semester\DBMS\Lab\Mid Term Exams project\ProjectA1\ProjectA1\obj\Debug\ProjectA1.Main.resources
+E:\6th Semester\DBMS\Lab\Mid Term Exams project\ProjectA1\ProjectA1\obj\Debug\ProjectA1.Student.resources
+E:\6th Semester\DBMS\Lab\Mid Term Exams project\ProjectA1\ProjectA1\obj\Debug\ProjectA1.Project.resources
+E:\6th Semester\DBMS\Lab\Mid Term Exams project\ProjectA1\ProjectA1\obj\Debug\ProjectA1.Advisor.resources
+E:\6th Semester\DBMS\Lab\Mid Term Exams project\ProjectA1\ProjectA1\obj\Debug\ProjectA1.Evaluation.resources
