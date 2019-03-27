@@ -56,5 +56,40 @@ namespace ProjectA1
         {
 
         }
+
+        private void button6_Click(object sender, EventArgs e)
+        {
+            ProjectAdvisor p = new ProjectAdvisor();
+            p.Show();
+            this.Hide();
+        }
+
+        private void button7_Click(object sender, EventArgs e)
+        {
+            Group g = new Group();
+            g.Show();
+            this.Hide();
+        }
+
+        private void button8_Click(object sender, EventArgs e)
+        {
+            GroupStudent gs = new GroupStudent();
+            gs.Show();
+            this.Hide();
+        }
+
+        private void button9_Click(object sender, EventArgs e)
+        {
+            GroupProject gp = new GroupProject();
+            gp.Show();
+            this.Hide();
+        }
+
+        private void button10_Click(object sender, EventArgs e)
+        {
+            GroupEvaluation ge = new GroupEvaluation();
+            ge.Show();
+            this.Hide();
+        }
     }
 }

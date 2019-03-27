@@ -88,10 +88,6 @@ namespace ProjectA1
                 {
                     dbr1 = cmd1.ExecuteReader();
                     MessageBox.Show("saved");
-                    //foreach (dbr1 in Students)
-                    //{
-                    //    comboBox1.Items.Remove(comboBox1.SelectedItem);
-                    //}
                     comboBox1.Text = "";
                     textBox1.Text = "";
                     while (dbr1.Read())
@@ -130,42 +126,68 @@ namespace ProjectA1
             }
         }
 
+
         private void dataGridView1_RowHeaderMouseClick(object sender, DataGridViewCellMouseEventArgs e)
         {
+
             ID = Convert.ToInt32(dataGridView1.Rows[e.RowIndex].Cells[0].Value.ToString());
             textBox1.Text = dataGridView1.Rows[e.RowIndex].Cells[1].Value.ToString();
+
         }
+
         private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
         {
-
+            bool isExists = false;
+            SqlConnection con = new SqlConnection(conStr);
+            con.Open();
+            string query = "Select * from Student";
+            SqlCommand cmd = new SqlCommand(query, con);
+            SqlDataReader dbr = cmd.ExecuteReader();
+            while (dbr.Read())
+            {
+                string id = comboBox1.Text;
+                if(id == Convert.ToString(dbr[0]))
+                {
+                    isExists = true;
+                    MessageBox.Show("ID already exixts. Cannot add data again corresponding to that ID.");
+                    comboBox1.Items[comboBox1.SelectedIndex] = string.Empty;
+                    //comboBox1.SelectedIndex = -1;
+                    break;
+                }
+            }
+            con.Close();
         }
 
         private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
-            //SqlConnection con = new SqlConnection(conStr);
-            //con.Open();
-            //int Id1 = Convert.ToInt32(dataGridView1.Rows[e.RowIndex].Cells[0].Value);
+            SqlConnection con = new SqlConnection(conStr);
+            con.Open();
+            int Id1 = Convert.ToInt32(dataGridView1.Rows[e.RowIndex].Cells[0].Value);
 
-            //if (e.ColumnIndex == 3)
-            //{
-            //    if (MessageBox.Show("Are you sure you want to delete this record?", "Message", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
-            //    {
+            if (e.ColumnIndex == 2)
+            {
+                if (MessageBox.Show("Are you sure you want to delete this record?", "Message", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
+                {
 
-            //        this.dataGridView1.Rows.RemoveAt(e.RowIndex);
-            //        string query1 = "Delete from Student where Id = @Id1";
-            //        SqlCommand cmd1 = new SqlCommand(query1, con);
-            //        cmd1.Parameters.Add(new SqlParameter("@Id1", Id1));
-            //        cmd1.ExecuteNonQuery();
-            //        con.Close();
-            //    }
-            //}
+                    this.dataGridView1.Rows.RemoveAt(e.RowIndex);
+                    string query1 = "Delete from Student where Id = @Id1";
+                    string query2 = "Delete from GroupStudent where StudentId = @Id1";
+                    SqlCommand cmd1 = new SqlCommand(query1, con);
+                    SqlCommand cmd2 = new SqlCommand(query2, con);
+                    cmd1.Parameters.Add(new SqlParameter("@Id1", Id1));
+                    cmd2.Parameters.Add(new SqlParameter("@Id1", Id1));
+                    cmd2.ExecuteNonQuery();
+                    cmd1.ExecuteNonQuery();
+                    con.Close();
+                }
+            }
 
-            //if (e.ColumnIndex == 2)
-            //{
-            //    //comboBox1.Text = dataGridView1.Rows[e.RowIndex].Cells[0].FormattedValue.ToString();
-            //    textBox1.Text = dataGridView1.Rows[e.RowIndex].Cells[1].FormattedValue.ToString();
+            if (e.ColumnIndex == 2)
+            {
+                //comboBox1.Text = dataGridView1.Rows[e.RowIndex].Cells[0].FormattedValue.ToString();
+                textBox1.Text = dataGridView1.Rows[e.RowIndex].Cells[1].FormattedValue.ToString();
 
-            //}
+            }
         }
 
         private void textBox1_TextChanged(object sender, EventArgs e)
@@ -210,21 +232,24 @@ namespace ProjectA1
 
         private void button6_Click(object sender, EventArgs e)
         {
-            if (ID != 0)
-            {
-                cmd = new SqlCommand("delete Student where ID=@id", con);
-                con.Open();
-                cmd.Parameters.AddWithValue("@id", ID);
-                cmd.ExecuteNonQuery();
-                con.Close();
-                MessageBox.Show("Record Deleted Successfully!");
-                DisplayData();
-                ClearData();
-            }
-            else
-            {
-                MessageBox.Show("Please Select Record to Delete");
-            }
+        //    if (ID != 0)
+        //    {
+        //        cmd = new SqlCommand("delete Student where ID=@id", con);
+        //        SqlCommand cmd1 = new SqlCommand("delete GroupStudent where ID=@id", con);
+        //        con.Open();
+        //        cmd1.Parameters.AddWithValue("@id", ID);
+        //        cmd.Parameters.AddWithValue("@id", ID);
+        //        cmd1.ExecuteNonQuery();
+        //        cmd.ExecuteNonQuery();
+        //        con.Close();
+        //        MessageBox.Show("Record Deleted Successfully!");
+        //        DisplayData();
+        //        ClearData();
+        //    }
+        //    else
+        //    {
+        //        MessageBox.Show("Please Select Record to Delete");
+        //    }
         }
 
         private void textBox1_TextChanged_1(object sender, EventArgs e)

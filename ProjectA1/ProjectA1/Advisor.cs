@@ -15,9 +15,7 @@ namespace ProjectA1
     {
 
         SqlConnection con = new SqlConnection("Data Source=FARVASARDAR-PC\\FARVASQL;Initial Catalog=ProjectA;Integrated Security=True;");
-        SqlCommand cmd;
-        SqlDataAdapter adapt;
-        int ID = 0;
+        
 
 
         public Advisor()
@@ -33,10 +31,10 @@ namespace ProjectA1
             //this.advisorTableAdapter.Fill(this.projectADataSet3.Advisor);
 
 
-            comboBox1.Items.Remove(comboBox1.SelectedItem);
+            //comboBox1.Items.Remove(comboBox1.SelectedItem);
             //dataGridView1.Hide();
             SqlConnection con = new SqlConnection(conStr);
-            string query = "select Id from Lookup  where Category = 'DESIGNATION' or Category = 'ADVISOR_ROLE' ";
+            string query = "select Id from Lookup  where Category = 'DESIGNATION' ";
             SqlCommand cmd = new SqlCommand(query, con);
             SqlDataReader dbr;
 
@@ -46,7 +44,7 @@ namespace ProjectA1
                 dbr = cmd.ExecuteReader();
                 while (dbr.Read())
                 {
-                    comboBox1.Items.Add(dbr[0]);
+                    //comboBox1.Items.Add(dbr[0]);
                 }
             }
             catch (Exception ex)
@@ -60,17 +58,17 @@ namespace ProjectA1
         {
             SqlConnection con = new SqlConnection(conStr);
             con.Open();
-            string s = comboBox1.Text;
+            //string s = comboBox1.Text;
             if (con.State == ConnectionState.Open)
             {
-                string query1 = "insert into Advisor(Id, Designation, Salary) values ( '" + comboBox1.Text + "' ,(select Id from Lookup where value ='" + comboBox2.Text + "') , '" + Convert.ToDecimal(textBox2.Text) + "')";
+                string query1 = "insert into Advisor(Id, Designation, Salary) values ( '" +Convert.ToInt32(textBox1.Text) + "' ,(select Id from Lookup where value ='" + comboBox2.Text + "') , '" + Convert.ToDecimal(textBox2.Text) + "')";
                 SqlCommand cmd1 = new SqlCommand(query1, con);
                 SqlDataReader dbr1;
                 try
                 {
                     dbr1 = cmd1.ExecuteReader();
                     MessageBox.Show("saved");
-                    comboBox1.SelectedValue = "";
+                    textBox1.Text = "";
                     comboBox2.SelectedValue = "";
                     textBox2.Text = "";
                     while (dbr1.Read())
@@ -111,148 +109,87 @@ namespace ProjectA1
         }
 
 
-        private void DisplayData()
-        {
-            con.Open();
-            DataTable dt = new DataTable();
-            adapt = new SqlDataAdapter("select * from Student", con);
-            adapt.Fill(dt);
-            dataGridView1.DataSource = dt;
-            con.Close();
-        }
-
-        private void ClearData()
-        {
-            
-            comboBox1.Text = "";
-            comboBox2.Text = "";
-            textBox2.Text = "";
-            ID = 0;
-        }
-
-
         private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
-            //SqlConnection con = new SqlConnection(conStr);
-            //con.Open();
-            //int Id1 = Convert.ToInt32(dataGridView1.Rows[e.RowIndex].Cells[0].Value);
+            SqlConnection con = new SqlConnection(conStr);
+            con.Open();
+            int Id1 = Convert.ToInt32(dataGridView1.Rows[e.RowIndex].Cells[0].Value);
 
-            //if (e.ColumnIndex == 3)
-            //{
-            //    if (MessageBox.Show("Are you sure you want to delete this record?", "Message", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
-            //    {
+            if (e.ColumnIndex == 4)
+            {
+                if (MessageBox.Show("Are you sure you want to delete this record?", "Message", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
+                {
 
-            //        this.dataGridView1.Rows.RemoveAt(e.RowIndex);
-            //        string query1 = "Delete from Advisor where Id = @Id1";
-            //        SqlCommand cmd1 = new SqlCommand(query1, con);
-            //        cmd1.Parameters.Add(new SqlParameter("@Id1", Id1));
-            //        cmd1.ExecuteNonQuery();
-            //        con.Close();
-            //    }
-            //}
+                    string query = "Delete from ProjectAdvisor where AdvisorId = @Id1";
+                    string query1 = "Delete from Advisor where Id = @Id1";
+                    SqlCommand cmd = new SqlCommand(query, con);
+                    SqlCommand cmd1 = new SqlCommand(query1, con);
+                    this.dataGridView1.Rows.RemoveAt(e.RowIndex);
+                    cmd.Parameters.Add(new SqlParameter("@Id1", Id1));
+                    cmd.ExecuteNonQuery();
+                    cmd1.Parameters.Add(new SqlParameter("@Id1", Id1));
+                    cmd1.ExecuteNonQuery();
+                    con.Close();
+                }
+            }
 
-            //if (e.ColumnIndex == 2)
-            //{
-            //    //comboBox1.Text = dataGridView1.Rows[e.RowIndex].Cells[0].FormattedValue.ToString();
-            //    textBox1.Text = dataGridView1.Rows[e.RowIndex].Cells[1].FormattedValue.ToString();
-            //    textBox2.Text = dataGridView1.Rows[e.RowIndex].Cells[2].FormattedValue.ToString();
 
-            //}
+            if (e.ColumnIndex == 3)
+            {
+                textBox1.Text = dataGridView1.Rows[e.RowIndex].Cells[0].FormattedValue.ToString();
+                comboBox2.Text = dataGridView1.Rows[e.RowIndex].Cells[1].FormattedValue.ToString();
+                textBox2.Text = dataGridView1.Rows[e.RowIndex].Cells[2].FormattedValue.ToString();
+
+
+            }
         }
 
         private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
         {
-
+           
         }
 
         private void dataGridView1_RowHeaderMouseClick(object sender, DataGridViewCellMouseEventArgs e)
         {
-            ID = Convert.ToInt32(dataGridView1.Rows[e.RowIndex].Cells[0].Value.ToString());
-            comboBox1.Text = dataGridView1.Rows[e.RowIndex].Cells[0].Value.ToString();
 
-            //int number = int.Parse(comboBox2.Items[comboBox2.SelectedIndex].ToString());
-            
-
-            //int id;
-            //if (comboBox2.Items[comboBox2.SelectedIndex].ToString() == "Professor")
-            //{
-            //    id = 6;
-            //}
-            //if (comboBox2.Items[comboBox2.SelectedIndex].ToString() == "Associate Professor")
-            //{
-            //    id = 7;
-            //}
-            //if (comboBox2.Items[comboBox2.SelectedIndex].ToString() == "Assisstant Professor")
-            //{
-            //    id = 8;
-            //}
-            //if (comboBox2.Items[comboBox2.SelectedIndex].ToString() == "Lecturer")
-            //{
-            //    id = 9;
-            //}
-            //if (comboBox2.Items[comboBox2.SelectedIndex].ToString() == "Industry Professional")
-            //{
-            //    id = 10;
-            //}
-
-            //int value;
-            //if (!Int32.TryParse(this.comboBox2.Text, out value))
-            //{
-            //    comboBox2.Text = dataGridView1.Rows[e.RowIndex].Cells[1].Value.ToString();
-            //}
-
+            textBox1.Text = dataGridView1.Rows[e.RowIndex].Cells[0].Value.ToString();
+            comboBox2.Text = dataGridView1.Rows[e.RowIndex].Cells[1].Value.ToString();
             textBox2.Text = dataGridView1.Rows[e.RowIndex].Cells[2].Value.ToString();
-        }
 
-        
+        }        
 
         private void button3_Click(object sender, EventArgs e)
         {
-            if (textBox2.Text != "" && comboBox1.Text != "" && comboBox2.Text != "")
+
+            SqlConnection conn = new SqlConnection(conStr);
+            conn.Open();
+            string query = "update Advisor set Id = '" + this.textBox1.Text + "' , Salary= '"+ this.textBox2.Text +"'  ";
+            SqlCommand cmd = new SqlCommand(query, conn);
+            string query1 = "update ProjectAdvisor set AdvisorId = '" + this.textBox1.Text + "' ";
+            SqlCommand cmd1 = new SqlCommand(query1, conn);
+            cmd1.ExecuteNonQuery();
+            cmd.ExecuteNonQuery();
+            MessageBox.Show("Record is successfully edited.");
+            using (SqlConnection sqlcon = new SqlConnection(conStr))
             {
+                sqlcon.Open();
+                SqlDataAdapter sqlDa = new SqlDataAdapter("select * from Advisor", sqlcon);
+                DataTable t = new DataTable();
+                sqlDa.Fill(t);
+                dataGridView1.DataSource = t;
 
-                SqlDataAdapter adapter = new SqlDataAdapter();
-
-                cmd = new SqlCommand("update Advisor set Designation=@desig, Salary=@salry where ID=@id", con);
-                con.Open();
-                cmd.Parameters.AddWithValue("@id", ID);
-                cmd.Parameters.AddWithValue("@salry", textBox2.Text);
-                cmd.Parameters.AddWithValue("@desig", comboBox2.Text);
-
-                cmd.ExecuteNonQuery();
-                MessageBox.Show("Record Edited Successfully");
-                con.Close();
-                DisplayData();
-                ClearData();
             }
-            else
-            {
-                MessageBox.Show("Please Select Record to Update");
-            }
+
         }
 
         private void button4_Click(object sender, EventArgs e)
         {
-            if (ID != 0)
-            {
-                cmd = new SqlCommand("delete Advisor where ID=@id", con);
-                con.Open();
-                cmd.Parameters.AddWithValue("@id", ID);
-                cmd.ExecuteNonQuery();
-                con.Close();
-                MessageBox.Show("Record Deleted Successfully!");
-                DisplayData();
-                ClearData();
-            }
-            else
-            {
-                MessageBox.Show("Please Select Record to Delete");
-            }
+
         }
 
         private void comboBox2_SelectedIndexChanged(object sender, EventArgs e)
         {
-
+           
         }
 
         private void textBox2_TextChanged(object sender, EventArgs e)
@@ -275,6 +212,28 @@ namespace ProjectA1
             Main m = new Main();
             m.Show();
             this.Hide();
+        }
+
+        private void textBox1_TextChanged(object sender, EventArgs e)
+        {
+            //bool isExists = false;
+            //SqlConnection con = new SqlConnection(conStr);
+            //con.Open();
+            //string query = "Select * from Advisor";
+            //SqlCommand cmd = new SqlCommand(query, con);
+            //SqlDataReader dbr = cmd.ExecuteReader();
+            //while (dbr.Read())
+            //{
+            //    string id = textBox1.Text;
+            //    if (id == Convert.ToString(dbr[0]))
+            //    {
+            //        isExists = true;
+            //        MessageBox.Show("ID already exixts. Cannot add data again corresponding to that ID.");
+            //        textBox1.Text = "";
+            //        break;
+            //    }
+            //}
+            //con.Close();
         }
     }
 }

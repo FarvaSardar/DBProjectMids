@@ -20,7 +20,7 @@ namespace ProjectA1 {
     [global::System.ComponentModel.DesignerCategoryAttribute("code")]
     [global::System.ComponentModel.ToolboxItem(true)]
     [global::System.Xml.Serialization.XmlSchemaProviderAttribute("GetTypedDataSetSchema")]
-    [global::System.Xml.Serialization.XmlRootAttribute("ProjectADataSet2")]
+    [global::System.Xml.Serialization.XmlRootAttribute("ProjectDataSet")]
     [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.DataSet")]
     public partial class ProjectDataSet : global::System.Data.DataSet {
         
@@ -199,9 +199,9 @@ namespace ProjectA1 {
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
         private void InitClass() {
-            this.DataSetName = "ProjectADataSet2";
+            this.DataSetName = "ProjectDataSet";
             this.Prefix = "";
-            this.Namespace = "http://tempuri.org/ProjectADataSet2.xsd";
+            this.Namespace = "http://tempuri.org/ProjectDataSet.xsd";
             this.EnforceConstraints = true;
             this.SchemaSerializationMode = global::System.Data.SchemaSerializationMode.IncludeSchema;
             this.tableProject = new ProjectDataTable();
@@ -665,7 +665,7 @@ namespace ProjectA1 {
         }
     }
 }
-namespace ProjectA1.ProjectADataSet2TableAdapters {
+namespace ProjectA1.ProjectDataSetTableAdapters {
     
     
     /// <summary>

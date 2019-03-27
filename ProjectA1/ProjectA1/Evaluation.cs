@@ -108,32 +108,7 @@ namespace ProjectA1
 
         private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
-            //SqlConnection con = new SqlConnection(conStr);
-            //con.Open();
-            //int Id1 = Convert.ToInt32(dataGridView1.Rows[e.RowIndex].Cells[0].Value);
-
-            //if (e.ColumnIndex == 5)
-            //{
-            //    if (MessageBox.Show("Are you sure you want to delete this record?", "Message", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
-            //    {
-
-            //        this.dataGridView1.Rows.RemoveAt(e.RowIndex);
-            //        string query1 = "Delete from Evaluation where Id = @Id1";
-            //        SqlCommand cmd1 = new SqlCommand(query1, con);
-            //        cmd1.Parameters.Add(new SqlParameter("@Id1", Id1));
-            //        cmd1.ExecuteNonQuery();
-            //        con.Close();
-            //    }
-            //}
-
-            //if (e.ColumnIndex == 4)
-            //{
-            //    textBox1.Text = dataGridView1.Rows[e.RowIndex].Cells[1].FormattedValue.ToString();
-            //    textBox2.Text = dataGridView1.Rows[e.RowIndex].Cells[2].FormattedValue.ToString();
-            //    textBox3.Text = dataGridView1.Rows[e.RowIndex].Cells[3].FormattedValue.ToString();
-       
-
-            //}
+            
         }
 
         private void button3_Click(object sender, EventArgs e)
@@ -156,17 +131,18 @@ namespace ProjectA1
             {
                 MessageBox.Show("Please Select Record to Update");
             }
-            //EditEvaluation ee = new EditEvaluation();
-            //ee.Show();
-            //this.Hide();
         }
 
         private void button4_Click(object sender, EventArgs e)
         {
             if (ID != 0)
             {
-                cmd = new SqlCommand("delete Evaluation where ID=@id", con);
                 con.Open();
+                SqlCommand cmd1 = new SqlCommand("delete GroupEvaluation where EvaluationId=@id", con);
+                cmd1.Parameters.AddWithValue("@id", ID);
+                cmd1.ExecuteNonQuery();
+
+                cmd = new SqlCommand("delete Evaluation where ID=@id", con);             
                 cmd.Parameters.AddWithValue("@id", ID);
                 cmd.ExecuteNonQuery();
                 con.Close();

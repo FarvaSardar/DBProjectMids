@@ -58,6 +58,50 @@
     <Compile Include="Evaluation.Designer.cs">
       <DependentUpon>Evaluation.cs</DependentUpon>
     </Compile>
+    <Compile Include="Group.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Group.Designer.cs">
+      <DependentUpon>Group.cs</DependentUpon>
+    </Compile>
+    <Compile Include="GroupDataSet.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>GroupDataSet.xsd</DependentUpon>
+    </Compile>
+    <Compile Include="GroupEvaluation.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="GroupEvaluation.Designer.cs">
+      <DependentUpon>GroupEvaluation.cs</DependentUpon>
+    </Compile>
+    <Compile Include="GroupEvaluationDataSet.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>GroupEvaluationDataSet.xsd</DependentUpon>
+    </Compile>
+    <Compile Include="GroupProject.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="GroupProject.Designer.cs">
+      <DependentUpon>GroupProject.cs</DependentUpon>
+    </Compile>
+    <Compile Include="GroupProjectDataSet.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>GroupProjectDataSet.xsd</DependentUpon>
+    </Compile>
+    <Compile Include="GroupStudent.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="GroupStudent.Designer.cs">
+      <DependentUpon>GroupStudent.cs</DependentUpon>
+    </Compile>
+    <Compile Include="GroupStudentDataSet.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>GroupStudentDataSet.xsd</DependentUpon>
+    </Compile>
     <Compile Include="Main.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -77,15 +121,26 @@
     <Compile Include="Project.Designer.cs">
       <DependentUpon>Project.cs</DependentUpon>
     </Compile>
-    <Compile Include="ProjectDataSet.Designer.cs">
+    <Compile Include="ProjectAdvisor.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ProjectAdvisor.Designer.cs">
+      <DependentUpon>ProjectAdvisor.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ProjectAdvisorDataSet.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>ProjectDataSet.xsd</DependentUpon>
+      <DependentUpon>ProjectAdvisorDataSet.xsd</DependentUpon>
     </Compile>
     <Compile Include="EvaluationDataSet.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>EvaluationDataSet.xsd</DependentUpon>
+    </Compile>
+    <Compile Include="ProjectDataSet.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ProjectDataSet.xsd</DependentUpon>
     </Compile>
     <Compile Include="StudentDataSet.Designer.cs">
       <AutoGen>True</AutoGen>
@@ -110,6 +165,18 @@
     <EmbeddedResource Include="Evaluation.resx">
       <DependentUpon>Evaluation.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Group.resx">
+      <DependentUpon>Group.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="GroupEvaluation.resx">
+      <DependentUpon>GroupEvaluation.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="GroupProject.resx">
+      <DependentUpon>GroupProject.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="GroupStudent.resx">
+      <DependentUpon>GroupStudent.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Main.resx">
       <DependentUpon>Main.cs</DependentUpon>
     </EmbeddedResource>
@@ -118,6 +185,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Project.resx">
       <DependentUpon>Project.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ProjectAdvisor.resx">
+      <DependentUpon>ProjectAdvisor.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
@@ -131,16 +201,60 @@
     <EmbeddedResource Include="Student.resx">
       <DependentUpon>Student.cs</DependentUpon>
     </EmbeddedResource>
-    <None Include="ProjectDataSet.xsc">
-      <DependentUpon>ProjectDataSet.xsd</DependentUpon>
+    <None Include="GroupDataSet.xsc">
+      <DependentUpon>GroupDataSet.xsd</DependentUpon>
     </None>
-    <None Include="ProjectDataSet.xsd">
+    <None Include="GroupDataSet.xsd">
       <Generator>MSDataSetGenerator</Generator>
-      <LastGenOutput>ProjectDataSet.Designer.cs</LastGenOutput>
+      <LastGenOutput>GroupDataSet.Designer.cs</LastGenOutput>
       <SubType>Designer</SubType>
     </None>
-    <None Include="ProjectDataSet.xss">
-      <DependentUpon>ProjectDataSet.xsd</DependentUpon>
+    <None Include="GroupDataSet.xss">
+      <DependentUpon>GroupDataSet.xsd</DependentUpon>
+    </None>
+    <None Include="GroupEvaluationDataSet.xsc">
+      <DependentUpon>GroupEvaluationDataSet.xsd</DependentUpon>
+    </None>
+    <None Include="GroupEvaluationDataSet.xsd">
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>GroupEvaluationDataSet.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="GroupEvaluationDataSet.xss">
+      <DependentUpon>GroupEvaluationDataSet.xsd</DependentUpon>
+    </None>
+    <None Include="GroupProjectDataSet.xsc">
+      <DependentUpon>GroupProjectDataSet.xsd</DependentUpon>
+    </None>
+    <None Include="GroupProjectDataSet.xsd">
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>GroupProjectDataSet.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="GroupProjectDataSet.xss">
+      <DependentUpon>GroupProjectDataSet.xsd</DependentUpon>
+    </None>
+    <None Include="GroupStudentDataSet.xsc">
+      <DependentUpon>GroupStudentDataSet.xsd</DependentUpon>
+    </None>
+    <None Include="GroupStudentDataSet.xsd">
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>GroupStudentDataSet.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="GroupStudentDataSet.xss">
+      <DependentUpon>GroupStudentDataSet.xsd</DependentUpon>
+    </None>
+    <None Include="ProjectAdvisorDataSet.xsc">
+      <DependentUpon>ProjectAdvisorDataSet.xsd</DependentUpon>
+    </None>
+    <None Include="ProjectAdvisorDataSet.xsd">
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>ProjectAdvisorDataSet.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="ProjectAdvisorDataSet.xss">
+      <DependentUpon>ProjectAdvisorDataSet.xsd</DependentUpon>
     </None>
     <None Include="EvaluationDataSet.xsc">
       <DependentUpon>EvaluationDataSet.xsd</DependentUpon>
@@ -152,6 +266,17 @@
     </None>
     <None Include="EvaluationDataSet.xss">
       <DependentUpon>EvaluationDataSet.xsd</DependentUpon>
+    </None>
+    <None Include="ProjectDataSet.xsc">
+      <DependentUpon>ProjectDataSet.xsd</DependentUpon>
+    </None>
+    <None Include="ProjectDataSet.xsd">
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>ProjectDataSet.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="ProjectDataSet.xss">
+      <DependentUpon>ProjectDataSet.xsd</DependentUpon>
     </None>
     <None Include="StudentDataSet.xsc">
       <DependentUpon>StudentDataSet.xsd</DependentUpon>
