@@ -42,15 +42,15 @@
             this.label3 = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
-            this.projectAdvisorBindingSource1 = new System.Windows.Forms.BindingSource(this.components);
-            this.projectAdvisorDataSet = new ProjectA1.ProjectAdvisorDataSet();
-            this.projectAdvisorTableAdapter1 = new ProjectA1.ProjectAdvisorDataSetTableAdapters.ProjectAdvisorTableAdapter();
             this.advisorIdDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.projectIdDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.advisorRoleDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.assignmentDateDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Edit = new System.Windows.Forms.DataGridViewButtonColumn();
             this.Delete = new System.Windows.Forms.DataGridViewButtonColumn();
+            this.projectAdvisorBindingSource1 = new System.Windows.Forms.BindingSource(this.components);
+            this.projectAdvisorDataSet = new ProjectA1.ProjectAdvisorDataSet();
+            this.projectAdvisorTableAdapter1 = new ProjectA1.ProjectAdvisorDataSetTableAdapters.ProjectAdvisorTableAdapter();
             this.linkLabel1 = new System.Windows.Forms.LinkLabel();
             ((System.ComponentModel.ISupportInitialize)(this.projectAdvisorBindingSource)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
@@ -64,6 +64,7 @@
             this.dateTimePicker1.Name = "dateTimePicker1";
             this.dateTimePicker1.Size = new System.Drawing.Size(237, 20);
             this.dateTimePicker1.TabIndex = 1;
+            this.dateTimePicker1.ValueChanged += new System.EventHandler(this.dateTimePicker1_ValueChanged);
             // 
             // label1
             // 
@@ -186,20 +187,6 @@
             this.dataGridView1.TabIndex = 14;
             this.dataGridView1.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellContentClick);
             // 
-            // projectAdvisorBindingSource1
-            // 
-            this.projectAdvisorBindingSource1.DataMember = "ProjectAdvisor";
-            this.projectAdvisorBindingSource1.DataSource = this.projectAdvisorDataSet;
-            // 
-            // projectAdvisorDataSet
-            // 
-            this.projectAdvisorDataSet.DataSetName = "ProjectAdvisorDataSet";
-            this.projectAdvisorDataSet.SchemaSerializationMode = System.Data.SchemaSerializationMode.IncludeSchema;
-            // 
-            // projectAdvisorTableAdapter1
-            // 
-            this.projectAdvisorTableAdapter1.ClearBeforeFill = true;
-            // 
             // advisorIdDataGridViewTextBoxColumn
             // 
             this.advisorIdDataGridViewTextBoxColumn.DataPropertyName = "AdvisorId";
@@ -240,6 +227,20 @@
             this.Delete.Name = "Delete";
             this.Delete.Text = "Delete";
             this.Delete.UseColumnTextForButtonValue = true;
+            // 
+            // projectAdvisorBindingSource1
+            // 
+            this.projectAdvisorBindingSource1.DataMember = "ProjectAdvisor";
+            this.projectAdvisorBindingSource1.DataSource = this.projectAdvisorDataSet;
+            // 
+            // projectAdvisorDataSet
+            // 
+            this.projectAdvisorDataSet.DataSetName = "ProjectAdvisorDataSet";
+            this.projectAdvisorDataSet.SchemaSerializationMode = System.Data.SchemaSerializationMode.IncludeSchema;
+            // 
+            // projectAdvisorTableAdapter1
+            // 
+            this.projectAdvisorTableAdapter1.ClearBeforeFill = true;
             // 
             // linkLabel1
             // 

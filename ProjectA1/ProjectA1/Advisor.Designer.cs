@@ -39,6 +39,11 @@
             this.advisorTableAdapter = new ProjectA1.ProjectADataSet8TableAdapters.AdvisorTableAdapter();
             this.button2 = new System.Windows.Forms.Button();
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
+            this.idDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.designationDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.salaryDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Edit = new System.Windows.Forms.DataGridViewButtonColumn();
+            this.Delete = new System.Windows.Forms.DataGridViewButtonColumn();
             this.advisorBindingSource1 = new System.Windows.Forms.BindingSource(this.components);
             this.projectADataSet8 = new ProjectA1.AdvisorDataSet();
             this.advisorTableAdapter1 = new ProjectA1.ProjectADataSet8TableAdapters.AdvisorTableAdapter();
@@ -46,11 +51,6 @@
             this.comboBox2 = new System.Windows.Forms.ComboBox();
             this.linkLabel1 = new System.Windows.Forms.LinkLabel();
             this.textBox1 = new System.Windows.Forms.TextBox();
-            this.idDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.designationDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.salaryDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Edit = new System.Windows.Forms.DataGridViewButtonColumn();
-            this.Delete = new System.Windows.Forms.DataGridViewButtonColumn();
             ((System.ComponentModel.ISupportInitialize)(this.advisorBindingSource)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.projectADataSet3)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
@@ -148,65 +148,6 @@
             this.dataGridView1.CellMouseClick += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.dataGridView1_RowHeaderMouseClick);
             this.dataGridView1.ColumnHeaderMouseClick += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.dataGridView1_RowHeaderMouseClick);
             // 
-            // advisorBindingSource1
-            // 
-            this.advisorBindingSource1.DataMember = "Advisor";
-            this.advisorBindingSource1.DataSource = this.projectADataSet8;
-            // 
-            // projectADataSet8
-            // 
-            this.projectADataSet8.DataSetName = "ProjectADataSet8";
-            this.projectADataSet8.SchemaSerializationMode = System.Data.SchemaSerializationMode.IncludeSchema;
-            // 
-            // advisorTableAdapter1
-            // 
-            this.advisorTableAdapter1.ClearBeforeFill = true;
-            // 
-            // button3
-            // 
-            this.button3.Location = new System.Drawing.Point(248, 142);
-            this.button3.Name = "button3";
-            this.button3.Size = new System.Drawing.Size(75, 41);
-            this.button3.TabIndex = 10;
-            this.button3.Text = "Edit";
-            this.button3.UseVisualStyleBackColor = true;
-            this.button3.Click += new System.EventHandler(this.button3_Click);
-            // 
-            // comboBox2
-            // 
-            this.comboBox2.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.comboBox2.FormattingEnabled = true;
-            this.comboBox2.Items.AddRange(new object[] {
-            "Professor",
-            "Associate Professor",
-            "Assisstant Professor",
-            "Lecturer",
-            "Industry Professional"});
-            this.comboBox2.Location = new System.Drawing.Point(148, 71);
-            this.comboBox2.Name = "comboBox2";
-            this.comboBox2.Size = new System.Drawing.Size(255, 21);
-            this.comboBox2.TabIndex = 12;
-            this.comboBox2.SelectedIndexChanged += new System.EventHandler(this.comboBox2_SelectedIndexChanged);
-            // 
-            // linkLabel1
-            // 
-            this.linkLabel1.AutoSize = true;
-            this.linkLabel1.Location = new System.Drawing.Point(146, 228);
-            this.linkLabel1.Name = "linkLabel1";
-            this.linkLabel1.Size = new System.Drawing.Size(55, 13);
-            this.linkLabel1.TabIndex = 13;
-            this.linkLabel1.TabStop = true;
-            this.linkLabel1.Text = "MainPage";
-            this.linkLabel1.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.linkLabel1_LinkClicked);
-            // 
-            // textBox1
-            // 
-            this.textBox1.Location = new System.Drawing.Point(148, 35);
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(256, 20);
-            this.textBox1.TabIndex = 14;
-            this.textBox1.TextChanged += new System.EventHandler(this.textBox1_TextChanged);
-            // 
             // idDataGridViewTextBoxColumn
             // 
             this.idDataGridViewTextBoxColumn.DataPropertyName = "Id";
@@ -245,6 +186,65 @@
             this.Delete.ReadOnly = true;
             this.Delete.Text = "Delete";
             this.Delete.UseColumnTextForButtonValue = true;
+            // 
+            // advisorBindingSource1
+            // 
+            this.advisorBindingSource1.DataMember = "Advisor";
+            this.advisorBindingSource1.DataSource = this.projectADataSet8;
+            // 
+            // projectADataSet8
+            // 
+            this.projectADataSet8.DataSetName = "ProjectADataSet8";
+            this.projectADataSet8.SchemaSerializationMode = System.Data.SchemaSerializationMode.IncludeSchema;
+            // 
+            // advisorTableAdapter1
+            // 
+            this.advisorTableAdapter1.ClearBeforeFill = true;
+            // 
+            // button3
+            // 
+            this.button3.Location = new System.Drawing.Point(248, 142);
+            this.button3.Name = "button3";
+            this.button3.Size = new System.Drawing.Size(75, 41);
+            this.button3.TabIndex = 10;
+            this.button3.Text = "Update";
+            this.button3.UseVisualStyleBackColor = true;
+            this.button3.Click += new System.EventHandler(this.button3_Click);
+            // 
+            // comboBox2
+            // 
+            this.comboBox2.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.comboBox2.FormattingEnabled = true;
+            this.comboBox2.Items.AddRange(new object[] {
+            "Professor",
+            "Associate Professor",
+            "Assisstant Professor",
+            "Lecturer",
+            "Industry Professional"});
+            this.comboBox2.Location = new System.Drawing.Point(148, 71);
+            this.comboBox2.Name = "comboBox2";
+            this.comboBox2.Size = new System.Drawing.Size(255, 21);
+            this.comboBox2.TabIndex = 12;
+            this.comboBox2.SelectedIndexChanged += new System.EventHandler(this.comboBox2_SelectedIndexChanged);
+            // 
+            // linkLabel1
+            // 
+            this.linkLabel1.AutoSize = true;
+            this.linkLabel1.Location = new System.Drawing.Point(146, 228);
+            this.linkLabel1.Name = "linkLabel1";
+            this.linkLabel1.Size = new System.Drawing.Size(55, 13);
+            this.linkLabel1.TabIndex = 13;
+            this.linkLabel1.TabStop = true;
+            this.linkLabel1.Text = "MainPage";
+            this.linkLabel1.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.linkLabel1_LinkClicked);
+            // 
+            // textBox1
+            // 
+            this.textBox1.Location = new System.Drawing.Point(148, 35);
+            this.textBox1.Name = "textBox1";
+            this.textBox1.Size = new System.Drawing.Size(256, 20);
+            this.textBox1.TabIndex = 14;
+            this.textBox1.TextChanged += new System.EventHandler(this.textBox1_TextChanged);
             // 
             // Advisor
             // 

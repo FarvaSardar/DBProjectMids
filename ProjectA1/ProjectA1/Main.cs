@@ -91,5 +91,17 @@ namespace ProjectA1
             ge.Show();
             this.Hide();
         }
+
+        private void button11_Click(object sender, EventArgs e)
+        {
+            
+        }
+
+        private void button12_Click(object sender, EventArgs e)
+        {
+            ReportProject r = new ReportProject();
+            r.Show();
+            this.Hide();
+        }
     }
 }

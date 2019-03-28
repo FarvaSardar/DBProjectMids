@@ -123,6 +123,10 @@ namespace ProjectA1
                 cmd.Parameters.AddWithValue("@totalweightage", textBox3.Text);
                 cmd.ExecuteNonQuery();
                 MessageBox.Show("Record Edited Successfully");
+
+                textBox1.Text = "";
+                textBox2.Text = "";
+                textBox3.Text = "";
                 con.Close();
                 DisplayData();
                 ClearData();
@@ -147,6 +151,9 @@ namespace ProjectA1
                 cmd.ExecuteNonQuery();
                 con.Close();
                 MessageBox.Show("Record Deleted Successfully!");
+                textBox1.Text = "";
+                textBox2.Text = "";
+                textBox3.Text = "";
                 DisplayData();
                 ClearData();
             }

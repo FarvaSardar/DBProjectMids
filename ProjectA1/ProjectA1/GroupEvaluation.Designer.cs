@@ -41,19 +41,19 @@
             this.textBox1 = new System.Windows.Forms.TextBox();
             this.dateTimePicker1 = new System.Windows.Forms.DateTimePicker();
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
-            this.groupEvaluationDataSet = new ProjectA1.GroupEvaluationDataSet();
-            this.groupEvaluationBindingSource = new System.Windows.Forms.BindingSource(this.components);
-            this.groupEvaluationTableAdapter = new ProjectA1.GroupEvaluationDataSetTableAdapters.GroupEvaluationTableAdapter();
             this.groupIdDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.evaluationIdDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.obtainedMarksDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.evaluationDateDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Edit = new System.Windows.Forms.DataGridViewButtonColumn();
             this.Delete = new System.Windows.Forms.DataGridViewButtonColumn();
+            this.groupEvaluationBindingSource = new System.Windows.Forms.BindingSource(this.components);
+            this.groupEvaluationDataSet = new ProjectA1.GroupEvaluationDataSet();
+            this.groupEvaluationTableAdapter = new ProjectA1.GroupEvaluationDataSetTableAdapters.GroupEvaluationTableAdapter();
             this.linkLabel1 = new System.Windows.Forms.LinkLabel();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.groupEvaluationDataSet)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.groupEvaluationBindingSource)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.groupEvaluationDataSet)).BeginInit();
             this.SuspendLayout();
             // 
             // label1
@@ -94,6 +94,7 @@
             // 
             // comboBox1
             // 
+            this.comboBox1.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.comboBox1.FormattingEnabled = true;
             this.comboBox1.Location = new System.Drawing.Point(154, 23);
             this.comboBox1.Name = "comboBox1";
@@ -102,6 +103,7 @@
             // 
             // comboBox2
             // 
+            this.comboBox2.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.comboBox2.FormattingEnabled = true;
             this.comboBox2.Location = new System.Drawing.Point(154, 57);
             this.comboBox2.Name = "comboBox2";
@@ -151,6 +153,7 @@
             this.dateTimePicker1.Name = "dateTimePicker1";
             this.dateTimePicker1.Size = new System.Drawing.Size(200, 20);
             this.dateTimePicker1.TabIndex = 12;
+            this.dateTimePicker1.ValueChanged += new System.EventHandler(this.dateTimePicker1_ValueChanged);
             // 
             // dataGridView1
             // 
@@ -169,20 +172,6 @@
             this.dataGridView1.Size = new System.Drawing.Size(635, 113);
             this.dataGridView1.TabIndex = 13;
             this.dataGridView1.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellContentClick);
-            // 
-            // groupEvaluationDataSet
-            // 
-            this.groupEvaluationDataSet.DataSetName = "GroupEvaluationDataSet";
-            this.groupEvaluationDataSet.SchemaSerializationMode = System.Data.SchemaSerializationMode.IncludeSchema;
-            // 
-            // groupEvaluationBindingSource
-            // 
-            this.groupEvaluationBindingSource.DataMember = "GroupEvaluation";
-            this.groupEvaluationBindingSource.DataSource = this.groupEvaluationDataSet;
-            // 
-            // groupEvaluationTableAdapter
-            // 
-            this.groupEvaluationTableAdapter.ClearBeforeFill = true;
             // 
             // groupIdDataGridViewTextBoxColumn
             // 
@@ -224,6 +213,20 @@
             this.Delete.Text = "Delete";
             this.Delete.UseColumnTextForButtonValue = true;
             // 
+            // groupEvaluationBindingSource
+            // 
+            this.groupEvaluationBindingSource.DataMember = "GroupEvaluation";
+            this.groupEvaluationBindingSource.DataSource = this.groupEvaluationDataSet;
+            // 
+            // groupEvaluationDataSet
+            // 
+            this.groupEvaluationDataSet.DataSetName = "GroupEvaluationDataSet";
+            this.groupEvaluationDataSet.SchemaSerializationMode = System.Data.SchemaSerializationMode.IncludeSchema;
+            // 
+            // groupEvaluationTableAdapter
+            // 
+            this.groupEvaluationTableAdapter.ClearBeforeFill = true;
+            // 
             // linkLabel1
             // 
             this.linkLabel1.AutoSize = true;
@@ -257,8 +260,8 @@
             this.Text = "GroupEvaluation";
             this.Load += new System.EventHandler(this.GroupEvaluation_Load);
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.groupEvaluationDataSet)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.groupEvaluationBindingSource)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.groupEvaluationDataSet)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 

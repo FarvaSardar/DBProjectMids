@@ -30,9 +30,6 @@ namespace ProjectA1
             // TODO: This line of code loads data into the 'projectADataSet3.Advisor' table. You can move, or remove it, as needed.
             //this.advisorTableAdapter.Fill(this.projectADataSet3.Advisor);
 
-
-            //comboBox1.Items.Remove(comboBox1.SelectedItem);
-            //dataGridView1.Hide();
             SqlConnection con = new SqlConnection(conStr);
             string query = "select Id from Lookup  where Category = 'DESIGNATION' ";
             SqlCommand cmd = new SqlCommand(query, con);
@@ -57,9 +54,31 @@ namespace ProjectA1
         private void button1_Click(object sender, EventArgs e)
         {
             SqlConnection con = new SqlConnection(conStr);
+            
+
+            bool isExists = false;
+            //SqlConnection con = new SqlConnection(conStr);
             con.Open();
-            //string s = comboBox1.Text;
-            if (con.State == ConnectionState.Open)
+            string query = "Select * from Advisor";
+            SqlCommand cmd = new SqlCommand(query, con);
+            SqlDataReader dbr = cmd.ExecuteReader();
+            while (dbr.Read())
+            {
+                string id = textBox1.Text;
+                if (id == Convert.ToString(dbr[0]))
+                {
+                    isExists = true;
+                    MessageBox.Show("ID already exixts. Cannot add data again corresponding to that ID.");
+                    textBox1.Text="";
+
+                    break;
+                }
+            }
+            con.Close();
+
+
+            con.Open();
+            if (!isExists)
             {
                 string query1 = "insert into Advisor(Id, Designation, Salary) values ( '" +Convert.ToInt32(textBox1.Text) + "' ,(select Id from Lookup where value ='" + comboBox2.Text + "') , '" + Convert.ToDecimal(textBox2.Text) + "')";
                 SqlCommand cmd1 = new SqlCommand(query1, con);
@@ -69,7 +88,7 @@ namespace ProjectA1
                     dbr1 = cmd1.ExecuteReader();
                     MessageBox.Show("saved");
                     textBox1.Text = "";
-                    comboBox2.SelectedValue = "";
+                    comboBox2.SelectedItem = null;
                     textBox2.Text = "";
                     while (dbr1.Read())
                     {
@@ -81,6 +100,7 @@ namespace ProjectA1
                 }
             }
             con.Close();
+
         }
 
 
@@ -129,6 +149,10 @@ namespace ProjectA1
                     cmd.ExecuteNonQuery();
                     cmd1.Parameters.Add(new SqlParameter("@Id1", Id1));
                     cmd1.ExecuteNonQuery();
+
+                    textBox1.Text = "";
+                    comboBox2.SelectedItem = null;
+                    textBox2.Text = "";
                     con.Close();
                 }
             }
@@ -180,6 +204,7 @@ namespace ProjectA1
 
             }
 
+
         }
 
         private void button4_Click(object sender, EventArgs e)
@@ -216,24 +241,7 @@ namespace ProjectA1
 
         private void textBox1_TextChanged(object sender, EventArgs e)
         {
-            //bool isExists = false;
-            //SqlConnection con = new SqlConnection(conStr);
-            //con.Open();
-            //string query = "Select * from Advisor";
-            //SqlCommand cmd = new SqlCommand(query, con);
-            //SqlDataReader dbr = cmd.ExecuteReader();
-            //while (dbr.Read())
-            //{
-            //    string id = textBox1.Text;
-            //    if (id == Convert.ToString(dbr[0]))
-            //    {
-            //        isExists = true;
-            //        MessageBox.Show("ID already exixts. Cannot add data again corresponding to that ID.");
-            //        textBox1.Text = "";
-            //        break;
-            //    }
-            //}
-            //con.Close();
+           
         }
     }
 }

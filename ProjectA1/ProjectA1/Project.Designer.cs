@@ -39,16 +39,17 @@
             this.button4 = new System.Windows.Forms.Button();
             this.linkLabel1 = new System.Windows.Forms.LinkLabel();
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
-            this.projectDataSet = new ProjectA1.ProjectDataSet();
-            this.projectBindingSource = new System.Windows.Forms.BindingSource(this.components);
-            this.projectTableAdapter = new ProjectA1.ProjectDataSetTableAdapters.ProjectTableAdapter();
             this.dataGridViewTextBoxColumn1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.dataGridViewTextBoxColumn2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.dataGridViewTextBoxColumn3 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Delete = new System.Windows.Forms.DataGridViewButtonColumn();
+            this.projectBindingSource = new System.Windows.Forms.BindingSource(this.components);
+            this.projectDataSet = new ProjectA1.ProjectDataSet();
+            this.projectTableAdapter = new ProjectA1.ProjectDataSetTableAdapters.ProjectTableAdapter();
+            this.button5 = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.projectDataSet)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.projectBindingSource)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.projectDataSet)).BeginInit();
             this.SuspendLayout();
             // 
             // label1
@@ -137,6 +138,7 @@
             // 
             // dataGridView1
             // 
+            this.dataGridView1.AllowUserToAddRows = false;
             this.dataGridView1.AutoGenerateColumns = false;
             this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dataGridView1.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
@@ -151,20 +153,6 @@
             this.dataGridView1.TabIndex = 11;
             this.dataGridView1.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellContentClick_2);
             this.dataGridView1.CellMouseClick += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.dataGridView1_RowHeaderMouseClick);
-            // 
-            // projectDataSet
-            // 
-            this.projectDataSet.DataSetName = "ProjectDataSet";
-            this.projectDataSet.SchemaSerializationMode = System.Data.SchemaSerializationMode.IncludeSchema;
-            // 
-            // projectBindingSource
-            // 
-            this.projectBindingSource.DataMember = "Project";
-            this.projectBindingSource.DataSource = this.projectDataSet;
-            // 
-            // projectTableAdapter
-            // 
-            this.projectTableAdapter.ClearBeforeFill = true;
             // 
             // dataGridViewTextBoxColumn1
             // 
@@ -193,11 +181,36 @@
             this.Delete.Text = "Delete";
             this.Delete.UseColumnTextForButtonValue = true;
             // 
-            // Project
+            // projectBindingSource
             // 
+            this.projectBindingSource.DataMember = "Project";
+            this.projectBindingSource.DataSource = this.projectDataSet;
+            // 
+            // projectDataSet
+            // 
+            this.projectDataSet.DataSetName = "ProjectDataSet";
+            this.projectDataSet.SchemaSerializationMode = System.Data.SchemaSerializationMode.IncludeSchema;
+            // 
+            // projectTableAdapter
+            // 
+            this.projectTableAdapter.ClearBeforeFill = true;
+            // 
+            // button5
+            // 
+            this.button5.Location = new System.Drawing.Point(181, 216);
+            this.button5.Name = "button5";
+            this.button5.Size = new System.Drawing.Size(124, 23);
+            this.button5.TabIndex = 12;
+            this.button5.Text = "Generate PDF";
+            this.button5.UseVisualStyleBackColor = true;
+            this.button5.Click += new System.EventHandler(this.button5_Click);
+             
+            // Project
+             
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(464, 381);
+            this.Controls.Add(this.button5);
             this.Controls.Add(this.dataGridView1);
             this.Controls.Add(this.linkLabel1);
             this.Controls.Add(this.button4);
@@ -212,8 +225,8 @@
             this.Text = "Project";
             this.Load += new System.EventHandler(this.Project_Load);
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.projectDataSet)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.projectBindingSource)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.projectDataSet)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -231,9 +244,9 @@
         private System.Windows.Forms.Button button3;
         private System.Windows.Forms.Button button4;
         //private ProjectADataSet5TableAdapters.ProjectTableAdapter projectTableAdapter1;
-        private System.Windows.Forms.DataGridViewTextBoxColumn idDataGridViewTextBoxColumn;
+       /* private System.Windows.Forms.DataGridViewTextBoxColumn idDataGridViewTextBoxColumn;
         private System.Windows.Forms.DataGridViewTextBoxColumn descriptionDataGridViewTextBoxColumn;
-        private System.Windows.Forms.DataGridViewTextBoxColumn titleDataGridViewTextBoxColumn;
+        private System.Windows.Forms.DataGridViewTextBoxColumn titleDataGridViewTextBoxColumn;*/
         private System.Windows.Forms.LinkLabel linkLabel1;
         private System.Windows.Forms.DataGridView dataGridView1;
         private ProjectDataSet projectDataSet;
@@ -243,5 +256,6 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn2;
         private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn3;
         private System.Windows.Forms.DataGridViewButtonColumn Delete;
+        private System.Windows.Forms.Button button5;
     }
 }

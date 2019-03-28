@@ -35,18 +35,18 @@
             this.button2 = new System.Windows.Forms.Button();
             this.button3 = new System.Windows.Forms.Button();
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
-            this.groupDataSet = new ProjectA1.GroupDataSet();
-            this.groupBindingSource = new System.Windows.Forms.BindingSource(this.components);
-            this.groupTableAdapter = new ProjectA1.GroupDataSetTableAdapters.GroupTableAdapter();
             this.idDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.createdOnDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Edit = new System.Windows.Forms.DataGridViewButtonColumn();
             this.Delete = new System.Windows.Forms.DataGridViewButtonColumn();
+            this.groupBindingSource = new System.Windows.Forms.BindingSource(this.components);
+            this.groupDataSet = new ProjectA1.GroupDataSet();
+            this.groupTableAdapter = new ProjectA1.GroupDataSetTableAdapters.GroupTableAdapter();
             this.linkLabel1 = new System.Windows.Forms.LinkLabel();
             this.dateTimePicker1 = new System.Windows.Forms.DateTimePicker();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.groupDataSet)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.groupBindingSource)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.groupDataSet)).BeginInit();
             this.SuspendLayout();
             // 
             // label1
@@ -112,20 +112,6 @@
             this.dataGridView1.TabIndex = 6;
             this.dataGridView1.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellContentClick);
             // 
-            // groupDataSet
-            // 
-            this.groupDataSet.DataSetName = "GroupDataSet";
-            this.groupDataSet.SchemaSerializationMode = System.Data.SchemaSerializationMode.IncludeSchema;
-            // 
-            // groupBindingSource
-            // 
-            this.groupBindingSource.DataMember = "Group";
-            this.groupBindingSource.DataSource = this.groupDataSet;
-            // 
-            // groupTableAdapter
-            // 
-            this.groupTableAdapter.ClearBeforeFill = true;
-            // 
             // idDataGridViewTextBoxColumn
             // 
             this.idDataGridViewTextBoxColumn.DataPropertyName = "Id";
@@ -155,6 +141,20 @@
             this.Delete.Text = "Delete";
             this.Delete.UseColumnTextForButtonValue = true;
             // 
+            // groupBindingSource
+            // 
+            this.groupBindingSource.DataMember = "Group";
+            this.groupBindingSource.DataSource = this.groupDataSet;
+            // 
+            // groupDataSet
+            // 
+            this.groupDataSet.DataSetName = "GroupDataSet";
+            this.groupDataSet.SchemaSerializationMode = System.Data.SchemaSerializationMode.IncludeSchema;
+            // 
+            // groupTableAdapter
+            // 
+            this.groupTableAdapter.ClearBeforeFill = true;
+            // 
             // linkLabel1
             // 
             this.linkLabel1.AutoSize = true;
@@ -172,6 +172,7 @@
             this.dateTimePicker1.Name = "dateTimePicker1";
             this.dateTimePicker1.Size = new System.Drawing.Size(200, 20);
             this.dateTimePicker1.TabIndex = 8;
+            this.dateTimePicker1.ValueChanged += new System.EventHandler(this.dateTimePicker1_ValueChanged);
             // 
             // Group
             // 
@@ -190,8 +191,8 @@
             this.Text = "Group";
             this.Load += new System.EventHandler(this.Group_Load);
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.groupDataSet)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.groupBindingSource)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.groupDataSet)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 

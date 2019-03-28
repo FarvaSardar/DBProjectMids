@@ -29,10 +29,8 @@ namespace ProjectA1
             SqlConnection con = new SqlConnection(conStr);
             string query = "select Id from [Group]";
             string query1 = "select Id from Student";
-            // string query2 = "select Value from Lookup where Category= 'ADVISOR_ROLE' ";
             SqlCommand cmd = new SqlCommand(query, con);
             SqlCommand cmd1 = new SqlCommand(query1, con);
-            //SqlCommand cmd2 = new SqlCommand(query2, con);
             SqlDataReader dbr, dbr1;
 
             try
@@ -74,17 +72,61 @@ namespace ProjectA1
         private void button1_Click(object sender, EventArgs e)
         {
             SqlConnection con = new SqlConnection(conStr);
+
+
+            //bool isExistsss = false;
+            //con.Open();
+            //string query4 = "SELECT GroupId  FROM GroupStudent HAVING COUNT(GroupId) < 3; ";
+            //SqlCommand cmd4 = new SqlCommand(query4, con);
+            //SqlDataReader db = cmd4.ExecuteReader();
+            //while (db.Read())
+            //{
+            //    string id = comboBox1.Text;
+            //    if (id == Convert.ToString(db[0]))
+            //    {
+            //        isExistsss = true;
+            //        MessageBox.Show("Group ID already exixts 3 times. Cannot add data again corresponding to that ID.");
+            //        comboBox1.SelectedItem = null;
+            //        break;
+            //    }
+            //}
+            //con.Close();
+
+
+            bool isExistss = false;
             con.Open();
-            if (con.State == ConnectionState.Open)
+            string query3 = "Select * from GroupStudent";
+            SqlCommand cmd3 = new SqlCommand(query3, con);
+            SqlDataReader dbrr = cmd3.ExecuteReader();
+            while (dbrr.Read())
             {
-                string query1 = "insert into GroupStudent(GroupId, StudentId, Status, AssignmentDate) values ( '" + comboBox1.Text + "' , '" + comboBox2.Text + "',(select Id from Lookup where Value= '" + comboBox3.Text + "' ),  '" + (dateTimePicker1.Value) + "') ";
+                string id = comboBox2.Text;
+                if (id == Convert.ToString(dbrr[1]))
+                {
+                    isExistss = true;
+                    MessageBox.Show("Student ID already exixts. Cannot add data again corresponding to that ID.");
+                    comboBox2.SelectedItem = null;
+                    break;
+                }
+            }
+            con.Close();
+
+
+
+            con.Open();
+            if (!isExistss /*&& !isExistsss*/)
+            {
+                string query1 = "insert into GroupStudent(GroupId, StudentId , Status, AssignmentDate) values ( '" + comboBox1.Text + "' , '" + comboBox2.Text + "' ,(select Id from Lookup where Value= '" + comboBox3.Text + "' ),  '" + (dateTimePicker1.Value) + "') ";
                 SqlCommand cmd1 = new SqlCommand(query1, con);
                 SqlDataReader dbr1;
                 try
                 {
                     dbr1 = cmd1.ExecuteReader();
                     MessageBox.Show("saved");
-                    comboBox2.SelectedValue = "";
+                    comboBox1.SelectedItem = null;
+                    comboBox2.SelectedItem = null;
+                    comboBox3.SelectedItem = null;
+                    dateTimePicker1.Value = DateTimePicker.MinimumDateTime;
                     while (dbr1.Read())
                     {
                     }
@@ -151,6 +193,11 @@ namespace ProjectA1
                     cmd1.Parameters.Add(new SqlParameter("@Id2", Id2));
                     cmd1.Parameters.Add(new SqlParameter("@Id1", Id1));
                     cmd1.ExecuteNonQuery();
+
+                    comboBox1.SelectedItem = null;
+                    comboBox2.SelectedItem = null;
+                    comboBox3.SelectedItem = null;
+                    dateTimePicker1.Value = DateTimePicker.MinimumDateTime;
                     con.Close();
                 }
             }
@@ -173,6 +220,11 @@ namespace ProjectA1
             SqlCommand cmd = new SqlCommand(query, conn);
             cmd.ExecuteNonQuery();
             MessageBox.Show("Record is successfully edited.");
+
+            comboBox1.SelectedItem = null;
+            comboBox2.SelectedItem = null;
+            comboBox3.SelectedItem = null;
+            dateTimePicker1.Value = DateTimePicker.MinimumDateTime;
             using (SqlConnection sqlcon = new SqlConnection(conStr))
             {
                 sqlcon.Open();
@@ -186,50 +238,28 @@ namespace ProjectA1
 
         private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
         {
-            //bool isExists = false;
-            //SqlConnection con = new SqlConnection(conStr);
-            //con.Open();
-            //string query = "Select * from GroupStudent";
-            //SqlCommand cmd = new SqlCommand(query, con);
-            //SqlDataReader dbr = cmd.ExecuteReader();
-            //while (dbr.Read())
-            //{
-            //    string id = comboBox1.Text;
-            //    if (id == Convert.ToString(dbr[0]))
-            //    {
-            //        isExists = true;
-            //        MessageBox.Show("ID already exixts. Cannot add data again corresponding to that ID.");
-            //        comboBox1.Items[comboBox1.SelectedIndex] = string.Empty;
-            //        //comboBox1.SelectedIndex = -1;
-            //        break;
-            //    }
-            //}
-            //con.Close();
-
 
         }
 
         private void comboBox2_SelectedIndexChanged(object sender, EventArgs e)
         {
-            //bool isExists = false;
-            //SqlConnection con = new SqlConnection(conStr);
-            //con.Open();
-            //string query = "Select * from GroupStudent";
-            //SqlCommand cmd = new SqlCommand(query, con);
-            //SqlDataReader dbr = cmd.ExecuteReader();
-            //while (dbr.Read())
-            //{
-            //    string id = comboBox2.Text;
-            //    if (id == Convert.ToString(dbr[0]))
-            //    {
-            //        isExists = true;
-            //        MessageBox.Show("ID already exixts. Cannot add data again corresponding to that ID.");
-            //        //comboBox1.Items[comboBox1.SelectedIndex] = string.Empty;
-            //        //comboBox1.SelectedIndex = -1;
-            //        break;
-            //    }
-            //}
-            //con.Close();
+
         }
+
+        private void dateTimePicker1_ValueChanged(object sender, EventArgs e)
+        {
+            if (dateTimePicker1.Value == DateTimePicker.MinimumDateTime)
+            {
+                dateTimePicker1.Value = DateTime.Now;
+                dateTimePicker1.Format = DateTimePickerFormat.Custom;
+                dateTimePicker1.CustomFormat = " ";
+            }
+            else
+            {
+                dateTimePicker1.Format = DateTimePickerFormat.Short;
+            }
+        }
+
+
     }
 }

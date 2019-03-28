@@ -78,31 +78,54 @@ namespace ProjectA1
             }
             con.Close();
 
-
-
-            //try
-            //{
-            //    con.Open();
-            //    dbr2 = cmd2.ExecuteReader();
-            //    while (dbr2.Read())
-            //    {
-            //        comboBox3.Items.Add(dbr2[0]);
-            //    }
-            //}
-            //catch (Exception ex)
-            //{
-            //    MessageBox.Show(ex.Message);
-            //}
-            //con.Close();
-
         }
 
 
         private void button1_Click(object sender, EventArgs e)
         {
             SqlConnection con = new SqlConnection(conStr);
+
+
+            bool isExistss = false;
             con.Open();
-            if (con.State == ConnectionState.Open)
+            string query3 = "Select * from ProjectAdvisor";
+            SqlCommand cmd3 = new SqlCommand(query3, con);
+            SqlDataReader dbrr = cmd3.ExecuteReader();
+            while (dbrr.Read())
+            {
+                string id = comboBox1.Text;
+                if (id == Convert.ToString(dbrr[0]))
+                {
+                    isExistss = true;
+                    MessageBox.Show("Advisor ID already exixts. Cannot add data again corresponding to that ID.");
+                    comboBox1.SelectedItem = null;
+                    break;
+                }
+            }
+            con.Close();
+
+
+            bool isExists = false;
+            con.Open();
+            string query2 = "Select * from GroupStudent";
+            SqlCommand cmd2 = new SqlCommand(query2, con);
+            SqlDataReader dbr = cmd3.ExecuteReader();
+            while (dbr.Read())
+            {
+                string id = comboBox2.Text;
+                if (id == Convert.ToString(dbr[1]))
+                {
+                    isExistss = true;
+                    MessageBox.Show("Project ID already exixts. Cannot add data again corresponding to that ID.");
+                    comboBox2.SelectedItem = null;
+                    break;
+                }
+            }
+            con.Close();
+
+
+            con.Open();
+            if (!isExists && !isExistss)
             {
                 string query1 = "insert into ProjectAdvisor(AdvisorId, ProjectId, AdvisorRole, AssignmentDate) values ( '" + comboBox1.Text + "' , '" + comboBox2.Text + "',(select Id from Lookup where Value= '" + comboBox3.Text + "' ),  '" + (dateTimePicker1.Value) + "') ";
                 SqlCommand cmd1 = new SqlCommand(query1, con);
@@ -111,7 +134,10 @@ namespace ProjectA1
                 {
                     dbr1 = cmd1.ExecuteReader();
                     MessageBox.Show("saved");
-                    comboBox2.SelectedValue = "";
+                    comboBox1.SelectedItem = null;
+                    comboBox2.SelectedItem = null;
+                    comboBox3.SelectedItem = null;
+                    dateTimePicker1.Value = DateTimePicker.MinimumDateTime;
                     while (dbr1.Read())
                     {
                     }
@@ -179,6 +205,11 @@ namespace ProjectA1
             SqlCommand cmd = new SqlCommand(query, conn);
             cmd.ExecuteNonQuery();
             MessageBox.Show("Record is successfully edited.");
+
+            comboBox1.SelectedItem = null;
+            comboBox2.SelectedItem = null;
+            comboBox3.SelectedItem = null;
+            dateTimePicker1.Value = DateTimePicker.MinimumDateTime;
             using (SqlConnection sqlcon = new SqlConnection(conStr))
             {
                 sqlcon.Open();
@@ -209,6 +240,10 @@ namespace ProjectA1
                     cmd1.Parameters.Add(new SqlParameter("@Id2", Id2));
                     cmd1.Parameters.Add(new SqlParameter("@Id1", Id1));
                     cmd1.ExecuteNonQuery();
+                    comboBox1.SelectedItem = null;
+                    comboBox2.SelectedItem = null;
+                    comboBox3.SelectedItem = null;
+                    dateTimePicker1.Value = DateTimePicker.MinimumDateTime;
                     con.Close();
                 }
             }
@@ -233,6 +268,20 @@ namespace ProjectA1
             Main m = new Main();
             m.Show();
             this.Hide();
+        }
+
+        private void dateTimePicker1_ValueChanged(object sender, EventArgs e)
+        {
+            if (dateTimePicker1.Value == DateTimePicker.MinimumDateTime)
+            {
+                dateTimePicker1.Value = DateTime.Now; // This is required in order to show current month/year when user reopens the date popup.
+                dateTimePicker1.Format = DateTimePickerFormat.Custom;
+                dateTimePicker1.CustomFormat = " ";
+            }
+            else
+            {
+                dateTimePicker1.Format = DateTimePickerFormat.Short;
+            }
         }
     }
 }

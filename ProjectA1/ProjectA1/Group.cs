@@ -40,7 +40,8 @@ namespace ProjectA1
                 {
                     dbr1 = cmd1.ExecuteReader();
                     MessageBox.Show("saved");
-                    dateTimePicker1.Text = " ";
+                    //dateTimePicker1.Text = " ";
+                    dateTimePicker1.Value = DateTimePicker.MinimumDateTime;
                     while (dbr1.Read())
                     {
                     }
@@ -135,6 +136,20 @@ namespace ProjectA1
                 sqlDa.Fill(t);
                 dataGridView1.DataSource = t;
 
+            }
+        }
+
+        private void dateTimePicker1_ValueChanged(object sender, EventArgs e)
+        {
+            if (dateTimePicker1.Value == DateTimePicker.MinimumDateTime)
+            {
+                dateTimePicker1.Value = DateTime.Now; 
+                dateTimePicker1.Format = DateTimePickerFormat.Custom;
+                dateTimePicker1.CustomFormat = " ";
+            }
+            else
+            {
+                dateTimePicker1.Format = DateTimePickerFormat.Short;
             }
         }
     }

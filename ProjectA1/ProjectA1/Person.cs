@@ -55,8 +55,46 @@ namespace ProjectA1
         {
 
             SqlConnection con = new SqlConnection(conStr);
+
+            bool isExistss = false;
             con.Open();
-            if (con.State == ConnectionState.Open)
+            string query3 = "Select * from Person";
+            SqlCommand cmd3 = new SqlCommand(query3, con);
+            SqlDataReader dbrr = cmd3.ExecuteReader();
+            while (dbrr.Read())
+            {
+                string id = textBox3.Text;
+                if (id == Convert.ToString(dbrr[3]))
+                {
+                    isExistss = true;
+                    MessageBox.Show("Contact Number already exixts. Cannot add that again.");
+                    textBox3.Text="";
+                    break;
+                }
+            }
+            con.Close();
+
+
+            bool isExists = false;
+            con.Open();
+            string query4 = "Select * from Person";
+            SqlCommand cmd4 = new SqlCommand(query4, con);
+            SqlDataReader dbrrr = cmd3.ExecuteReader();
+            while (dbrrr.Read())
+            {
+                string id = textBox4.Text;
+                if (id == Convert.ToString(dbrrr[4]))
+                {
+                    isExistss = true;
+                    MessageBox.Show("Email ID already exixts. Cannot add that again.");
+                    textBox4.Text = "";
+                    break;
+                }
+            }
+            con.Close();
+
+            con.Open();
+            if (!isExists && !isExistss)
             {
                 string query1 = "insert into Person(FirstName,LastName,Contact,Email,DateOfBirth,Gender) values ('" + textBox1.Text.ToString() + "','" + textBox2.Text.ToString() + "','" + textBox3.Text.ToString() + "','" + textBox4.Text.ToString() + "' , '" + (dateTimePicker1.Value) + "',(select Id from Lookup where value ='"+comboBox1.Text+ "'))";
                 SqlCommand cmd1 = new SqlCommand(query1, con);
@@ -69,8 +107,8 @@ namespace ProjectA1
                     textBox2.Text = "";
                     textBox3.Text = "";
                     textBox4.Text = "";
-                    dateTimePicker1.Text = "";
-                    comboBox1.SelectedValue = "";
+                    dateTimePicker1.Value = DateTimePicker.MinimumDateTime;
+                    comboBox1.SelectedItem = null;
                     while (dbr1.Read())
                     {
                     }
@@ -132,8 +170,8 @@ namespace ProjectA1
             textBox2.Text = "";
             textBox3.Text = "";
             textBox4.Text = "";
-            dateTimePicker1.Text = "";
-            comboBox1.Text = "";
+            dateTimePicker1.Value = DateTimePicker.MinimumDateTime;
+            comboBox1.SelectedItem = null;
             ID = 0;
         }
 
@@ -158,6 +196,8 @@ namespace ProjectA1
 
         private void Person_Load(object sender, EventArgs e)
         {
+            // TODO: This line of code loads data into the 'personDataSet.Person' table. You can move, or remove it, as needed.
+            this.personTableAdapter.Fill(this.personDataSet.Person);
             // TODO: This line of code loads data into the 'projectADataSet6.Person' table. You can move, or remove it, as needed.
             //this.personTableAdapter1.Fill(this.projectADataSet6.Person);
             // TODO: This line of code loads data into the 'projectADataSet.Person' table. You can move, or remove it, as needed.
@@ -279,13 +319,15 @@ namespace ProjectA1
                 cmd1.Parameters.AddWithValue("@gndr", comboBox1.Text);             
                 cmd1.ExecuteNonQuery();
 
-
-                //SqlCommand cmd = new SqlCommand("update Student where ID=@id", con);
-                //cmd.Parameters.AddWithValue("@id", ID);
-                ////cmd.Parameters.AddWithValue("@regno", textBox1.Text);
-                //cmd.ExecuteNonQuery();
-
                 MessageBox.Show("Record Edited Successfully");
+
+                textBox1.Text = "";
+                textBox2.Text = "";
+                textBox3.Text = "";
+                textBox4.Text = "";
+                dateTimePicker1.Value = DateTimePicker.MinimumDateTime;
+                comboBox1.SelectedItem = null;
+
                 con.Close();
                 DisplayData();
                 ClearData();
@@ -313,6 +355,13 @@ namespace ProjectA1
 
                 con.Close();
                 MessageBox.Show("Record Deleted Successfully!");
+
+                textBox1.Text = "";
+                textBox2.Text = "";
+                textBox3.Text = "";
+                textBox4.Text = "";
+                dateTimePicker1.Value = DateTimePicker.MinimumDateTime;
+                comboBox1.SelectedItem = null;
                 DisplayData();
                 ClearData();
             }
@@ -323,6 +372,25 @@ namespace ProjectA1
         }
 
         private void Red(object sender, PaintEventArgs e)
+        {
+
+        }
+
+        private void dateTimePicker1_ValueChanged(object sender, EventArgs e)
+        {
+            if (dateTimePicker1.Value == DateTimePicker.MinimumDateTime)
+            {
+                dateTimePicker1.Value = DateTime.Now; 
+                dateTimePicker1.Format = DateTimePickerFormat.Custom;
+                dateTimePicker1.CustomFormat = " ";
+            }
+            else
+            {
+                dateTimePicker1.Format = DateTimePickerFormat.Short;
+            }
+        }
+
+        private void dataGridView1_CellContentClick_1(object sender, DataGridViewCellEventArgs e)
         {
 
         }

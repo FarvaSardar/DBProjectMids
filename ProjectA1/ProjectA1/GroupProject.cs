@@ -69,8 +69,49 @@ namespace ProjectA1
         private void button1_Click(object sender, EventArgs e)
         {
             SqlConnection con = new SqlConnection(conStr);
+
+
+            bool isExists = false;
             con.Open();
-            if (con.State == ConnectionState.Open)
+            string query2 = "Select * from GroupProject";
+            SqlCommand cmd2 = new SqlCommand(query2, con);
+            SqlDataReader dbr = cmd2.ExecuteReader();
+            while (dbr.Read())
+            {
+                string id = comboBox1.Text;
+                if (id == Convert.ToString(dbr[0]))
+                {
+                    isExists = true;
+                    MessageBox.Show("Project ID already exixts. Cannot add data again corresponding to that ID.");
+                    comboBox1.SelectedItem = null;
+                    break;
+                }
+            }
+            con.Close();
+
+
+
+            bool isExistss = false;
+            con.Open();
+            string query3 = "Select * from GroupProject";
+            SqlCommand cmd3 = new SqlCommand(query3, con);
+            SqlDataReader dbrr = cmd3.ExecuteReader();
+            while (dbrr.Read())
+            {
+                string id = comboBox2.Text;
+                if (id == Convert.ToString(dbrr[1]))
+                {
+                    isExistss = true;
+                    MessageBox.Show("Group ID already exixts. Cannot add data again corresponding to that ID.");
+                    comboBox2.SelectedItem = null;
+                    break;
+                }
+            }
+            con.Close();
+
+
+            con.Open();
+            if (!isExists && !isExistss)
             {
 
                 string query1 = "insert into GroupProject(ProjectId, GroupId, AssignmentDate) values ( '" +comboBox1.Text+ "' , '" + comboBox2.Text + "','" +Convert.ToDateTime(dateTimePicker1.Value) + "') ";
@@ -80,9 +121,9 @@ namespace ProjectA1
                 {
                     dbr1 = cmd1.ExecuteReader();
                     MessageBox.Show("saved");
-                    comboBox1.SelectedText = "";
-                    comboBox2.SelectedValue = "";
-                    dateTimePicker1.Text = "";
+                    comboBox1.SelectedItem = null;
+                    comboBox2.SelectedItem = null;
+                    dateTimePicker1.Value = DateTimePicker.MinimumDateTime;
                     while (dbr1.Read())
                     {
                     }
@@ -93,6 +134,7 @@ namespace ProjectA1
                 }
             }
             con.Close();
+            
         }
 
         private void linkLabel1_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
@@ -144,6 +186,10 @@ namespace ProjectA1
                     cmd1.Parameters.Add(new SqlParameter("@Id2", Id2));
                     cmd1.Parameters.Add(new SqlParameter("@Id1", Id1));
                     cmd1.ExecuteNonQuery();
+
+                    comboBox1.SelectedItem = null;
+                    comboBox2.SelectedItem = null;
+                    dateTimePicker1.Value = DateTimePicker.MinimumDateTime;
                     con.Close();
                 }
             }
@@ -165,6 +211,10 @@ namespace ProjectA1
             SqlCommand cmd = new SqlCommand(query, conn);
             cmd.ExecuteNonQuery();
             MessageBox.Show("Record is successfully edited.");
+
+            comboBox1.SelectedItem = null;
+            comboBox2.SelectedItem = null;
+            dateTimePicker1.Value = DateTimePicker.MinimumDateTime;
             using (SqlConnection sqlcon = new SqlConnection(conStr))
             {
                 sqlcon.Open();
@@ -173,6 +223,23 @@ namespace ProjectA1
                 sqlDa.Fill(t);
                 dataGridView1.DataSource = t;
 
+            }
+
+
+
+        }
+
+        private void dateTimePicker1_ValueChanged(object sender, EventArgs e)
+        {
+            if (dateTimePicker1.Value == DateTimePicker.MinimumDateTime)
+            {
+                dateTimePicker1.Value = DateTime.Now;
+                dateTimePicker1.Format = DateTimePickerFormat.Custom;
+                dateTimePicker1.CustomFormat = " ";
+            }
+            else
+            {
+                dateTimePicker1.Format = DateTimePickerFormat.Short;
             }
         }
     }

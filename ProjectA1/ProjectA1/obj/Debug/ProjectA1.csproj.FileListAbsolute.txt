@@ -17,3 +17,5 @@ E:\6th Semester\DBMS\Lab\Mid Term Exams project\ProjectA1\ProjectA1\obj\Debug\Pr
 E:\6th Semester\DBMS\Lab\Mid Term Exams project\ProjectA1\ProjectA1\obj\Debug\ProjectA1.GroupStudent.resources
 E:\6th Semester\DBMS\Lab\Mid Term Exams project\ProjectA1\ProjectA1\obj\Debug\ProjectA1.GroupProject.resources
 E:\6th Semester\DBMS\Lab\Mid Term Exams project\ProjectA1\ProjectA1\obj\Debug\ProjectA1.GroupEvaluation.resources
+E:\6th Semester\DBMS\Lab\Mid Term Exams project\ProjectA1\ProjectA1\bin\Debug\itextsharp.dll
+E:\6th Semester\DBMS\Lab\Mid Term Exams project\ProjectA1\ProjectA1\obj\Debug\ProjectA1.ReportProject.resources

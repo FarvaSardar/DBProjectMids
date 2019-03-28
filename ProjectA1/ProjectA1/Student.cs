@@ -67,7 +67,7 @@ namespace ProjectA1
 
         private void ClearData()
         {
-           // comboBox1.ValueMember = "";
+            comboBox1.SelectedItem = null;
             textBox1.Text = "";
             ID = 0;
         }
@@ -76,10 +76,49 @@ namespace ProjectA1
 
         private void button1_Click(object sender, EventArgs e)
         {
-            
+            bool isExists = false;
             SqlConnection con = new SqlConnection(conStr);
             con.Open();
-            if (con.State == ConnectionState.Open)
+            string query = "Select * from Student";
+            SqlCommand cmd = new SqlCommand(query, con);
+            SqlDataReader dbr = cmd.ExecuteReader();
+            while (dbr.Read())
+            {
+                string id = comboBox1.Text;
+                if (id == Convert.ToString(dbr[0]))
+                {
+                    isExists = true;
+                    MessageBox.Show("Student ID already exixts. Cannot add data again corresponding to that ID.");
+                    comboBox1.SelectedItem = null;
+
+                    break;
+                }
+            }
+            con.Close();
+
+
+            bool isExistss = false;
+            con.Open();
+            string query2 = "Select * from Student";
+            SqlCommand cmd2 = new SqlCommand(query2, con);
+            SqlDataReader dbrr = cmd.ExecuteReader();
+            while (dbrr.Read())
+            {
+                string id = textBox1.Text;
+                if (id == Convert.ToString(dbrr[1]))
+                {
+                    isExistss = true;
+                    MessageBox.Show("Registration Number already exixts. Cannot add that again.");
+                    textBox1.Text = "";
+
+                    break;
+                }
+            }
+            con.Close();
+
+            //SqlConnection con = new SqlConnection(conStr);
+            con.Open();
+            if (!isExists && !isExistss)
             {
                 string query1 = "insert into Student(Id, RegistrationNo) values ('"+ comboBox1.Text +"', '"+ textBox1.Text.ToString() + "' )";
                 SqlCommand cmd1 = new SqlCommand(query1, con);
@@ -88,7 +127,7 @@ namespace ProjectA1
                 {
                     dbr1 = cmd1.ExecuteReader();
                     MessageBox.Show("saved");
-                    comboBox1.Text = "";
+                    comboBox1.SelectedItem = null;
                     textBox1.Text = "";
                     while (dbr1.Read())
                     {
@@ -137,29 +176,12 @@ namespace ProjectA1
 
         private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
         {
-            bool isExists = false;
-            SqlConnection con = new SqlConnection(conStr);
-            con.Open();
-            string query = "Select * from Student";
-            SqlCommand cmd = new SqlCommand(query, con);
-            SqlDataReader dbr = cmd.ExecuteReader();
-            while (dbr.Read())
-            {
-                string id = comboBox1.Text;
-                if(id == Convert.ToString(dbr[0]))
-                {
-                    isExists = true;
-                    MessageBox.Show("ID already exixts. Cannot add data again corresponding to that ID.");
-                    comboBox1.Items[comboBox1.SelectedIndex] = string.Empty;
-                    //comboBox1.SelectedIndex = -1;
-                    break;
-                }
-            }
-            con.Close();
+           
         }
 
         private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
+
             SqlConnection con = new SqlConnection(conStr);
             con.Open();
             int Id1 = Convert.ToInt32(dataGridView1.Rows[e.RowIndex].Cells[0].Value);
@@ -178,6 +200,9 @@ namespace ProjectA1
                     cmd2.Parameters.Add(new SqlParameter("@Id1", Id1));
                     cmd2.ExecuteNonQuery();
                     cmd1.ExecuteNonQuery();
+
+                    comboBox1.SelectedItem = null;
+                    textBox1.Text = "";
                     con.Close();
                 }
             }
@@ -188,6 +213,7 @@ namespace ProjectA1
                 textBox1.Text = dataGridView1.Rows[e.RowIndex].Cells[1].FormattedValue.ToString();
 
             }
+            
         }
 
         private void textBox1_TextChanged(object sender, EventArgs e)
