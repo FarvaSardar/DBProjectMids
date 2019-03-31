@@ -103,5 +103,12 @@ namespace ProjectA1
             r.Show();
             this.Hide();
         }
+
+        private void button11_Click_1(object sender, EventArgs e)
+        {
+            ReportEvaluation re = new ReportEvaluation();
+            re.Show();
+            this.Hide();
+        }
     }
 }

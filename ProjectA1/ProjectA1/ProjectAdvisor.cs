@@ -39,10 +39,8 @@ namespace ProjectA1
             SqlConnection con = new SqlConnection(conStr);
             string query = "select Id from Advisor";
             string query1 = "select Id from Project";
-           // string query2 = "select Value from Lookup where Category= 'ADVISOR_ROLE' ";
             SqlCommand cmd = new SqlCommand(query, con);
             SqlCommand cmd1 = new SqlCommand(query1, con);
-            //SqlCommand cmd2 = new SqlCommand(query2, con);
             SqlDataReader dbr, dbr1;
 
             try
@@ -86,15 +84,33 @@ namespace ProjectA1
             SqlConnection con = new SqlConnection(conStr);
 
 
+            bool isExists = false;
+            con.Open();
+            string query2 = "SELECT AdvisorId , count(AdvisorId) FROM ProjectAdvisor group by AdvisorId having count(AdvisorId) >= 3 ";
+            SqlCommand cmd2 = new SqlCommand(query2, con);
+            SqlDataReader dbr = cmd2.ExecuteReader();
+            while (dbr.Read())
+            {
+                string id = comboBox2.Text;
+                if (id == Convert.ToString(dbr[0]))
+                {
+                    isExists = true;
+                    MessageBox.Show("Project ID already exixts. Cannot add data again corresponding to that ID.");
+                    comboBox2.SelectedItem = null;
+                    break;
+                }
+            }
+            con.Close();
+
             bool isExistss = false;
             con.Open();
-            string query3 = "Select * from ProjectAdvisor";
+            string query3 = "SELECT ProjectId , count(ProjectId) FROM ProjectAdvisor group by ProjectId having count(ProjectId) >= 3";
             SqlCommand cmd3 = new SqlCommand(query3, con);
             SqlDataReader dbrr = cmd3.ExecuteReader();
             while (dbrr.Read())
             {
                 string id = comboBox1.Text;
-                if (id == Convert.ToString(dbrr[0]))
+                if (id == Convert.ToString(dbrr[1]))
                 {
                     isExistss = true;
                     MessageBox.Show("Advisor ID already exixts. Cannot add data again corresponding to that ID.");
@@ -105,27 +121,8 @@ namespace ProjectA1
             con.Close();
 
 
-            bool isExists = false;
             con.Open();
-            string query2 = "Select * from GroupStudent";
-            SqlCommand cmd2 = new SqlCommand(query2, con);
-            SqlDataReader dbr = cmd3.ExecuteReader();
-            while (dbr.Read())
-            {
-                string id = comboBox2.Text;
-                if (id == Convert.ToString(dbr[1]))
-                {
-                    isExistss = true;
-                    MessageBox.Show("Project ID already exixts. Cannot add data again corresponding to that ID.");
-                    comboBox2.SelectedItem = null;
-                    break;
-                }
-            }
-            con.Close();
-
-
-            con.Open();
-            if (!isExists && !isExistss)
+            if (!isExistss && !isExists)
             {
                 string query1 = "insert into ProjectAdvisor(AdvisorId, ProjectId, AdvisorRole, AssignmentDate) values ( '" + comboBox1.Text + "' , '" + comboBox2.Text + "',(select Id from Lookup where Value= '" + comboBox3.Text + "' ),  '" + (dateTimePicker1.Value) + "') ";
                 SqlCommand cmd1 = new SqlCommand(query1, con);
@@ -133,7 +130,7 @@ namespace ProjectA1
                 try
                 {
                     dbr1 = cmd1.ExecuteReader();
-                    MessageBox.Show("saved");
+                    MessageBox.Show("Project Advisor assigned successfully.");
                     comboBox1.SelectedItem = null;
                     comboBox2.SelectedItem = null;
                     comboBox3.SelectedItem = null;
@@ -148,6 +145,27 @@ namespace ProjectA1
                 }
             }
             con.Close();
+
+            con.Open();
+            dataGridView1.Show();
+            //SqlConnection con = new SqlConnection(conStr);
+            string query = "Select * from ProjectAdvisor";
+            SqlCommand cmd = new SqlCommand(query, con);
+
+            try
+            {
+                SqlDataAdapter da = new SqlDataAdapter();
+                da.SelectCommand = cmd;
+                DataTable dt = new DataTable();
+                da.Fill(dt);
+                BindingSource source = new BindingSource();
+                source.DataSource = dt;
+                dataGridView1.DataSource = source;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
         }
 
         private void button2_Click(object sender, EventArgs e)
@@ -204,7 +222,7 @@ namespace ProjectA1
             string query = "update ProjectAdvisor set AdvisorId = '" + this.comboBox1.Text + "' , ProjectId = '" + this.comboBox2.Text + "'  ";
             SqlCommand cmd = new SqlCommand(query, conn);
             cmd.ExecuteNonQuery();
-            MessageBox.Show("Record is successfully edited.");
+            MessageBox.Show("Record is updated successfully.");
 
             comboBox1.SelectedItem = null;
             comboBox2.SelectedItem = null;

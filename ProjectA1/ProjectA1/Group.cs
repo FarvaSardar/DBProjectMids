@@ -39,7 +39,7 @@ namespace ProjectA1
                 try
                 {
                     dbr1 = cmd1.ExecuteReader();
-                    MessageBox.Show("saved");
+                    MessageBox.Show("Group created successfully.");
                     //dateTimePicker1.Text = " ";
                     dateTimePicker1.Value = DateTimePicker.MinimumDateTime;
                     while (dbr1.Read())
@@ -52,6 +52,29 @@ namespace ProjectA1
                 }
             }
             con.Close();
+
+
+            con.Open();
+            dataGridView1.Show();
+            //SqlConnection con = new SqlConnection(conStr);
+            string query = "Select * from [Group]";
+            SqlCommand cmd = new SqlCommand(query, con);
+
+            try
+            {
+                SqlDataAdapter da = new SqlDataAdapter();
+                da.SelectCommand = cmd;
+                DataTable dt = new DataTable();
+                da.Fill(dt);
+                BindingSource source = new BindingSource();
+                source.DataSource = dt;
+                dataGridView1.DataSource = source;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+
         }
 
         private void linkLabel1_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
@@ -98,14 +121,18 @@ namespace ProjectA1
                     string query1 = "Delete from [Group] where Id = @Id1 ";
                     string query2 = "Delete from [GroupStudent] where GroupId = @Id1 ";
                     string query3 = "Delete from [GroupProject] where GroupId = @Id1 ";
+                    string query4 = "Delete from [GroupEvaluation] where GroupId = @Id1 ";
                     SqlCommand cmd1 = new SqlCommand(query1, con);
                     SqlCommand cmd2 = new SqlCommand(query2, con);
                     SqlCommand cmd3 = new SqlCommand(query3, con);
+                    SqlCommand cmd4 = new SqlCommand(query4, con);
                     this.dataGridView1.Rows.RemoveAt(e.RowIndex);
                     cmd2.Parameters.Add(new SqlParameter("@Id1", Id1));
                     cmd2.ExecuteNonQuery();
                     cmd3.Parameters.Add(new SqlParameter("@Id1", Id1));
                     cmd3.ExecuteNonQuery();
+                    cmd4.Parameters.Add(new SqlParameter("@Id1", Id1));
+                    cmd4.ExecuteNonQuery();
                     cmd1.Parameters.Add(new SqlParameter("@Id1", Id1));
                     cmd1.ExecuteNonQuery();
                     con.Close();
@@ -122,21 +149,21 @@ namespace ProjectA1
 
         private void button3_Click(object sender, EventArgs e)
         {
-            SqlConnection conn = new SqlConnection(conStr);
-            conn.Open();
-            string query = "update [Group] set Created_On= '" + this.dateTimePicker1.Value + "'  ";
-            SqlCommand cmd = new SqlCommand(query, conn);
-            cmd.ExecuteNonQuery();
-            MessageBox.Show("Record is successfully edited.");
-            using (SqlConnection sqlcon = new SqlConnection(conStr))
-            {
-                sqlcon.Open();
-                SqlDataAdapter sqlDa = new SqlDataAdapter("select * from [Group]", sqlcon);
-                DataTable t = new DataTable();
-                sqlDa.Fill(t);
-                dataGridView1.DataSource = t;
+            //SqlConnection conn = new SqlConnection(conStr);
+            //conn.Open();
+            //string query = "update [Group] set Created_On= '" + this.dateTimePicker1.Value + "'  ";
+            //SqlCommand cmd = new SqlCommand(query, conn);
+            //cmd.ExecuteNonQuery();
+            //MessageBox.Show("Record is updated successfully.");
+            //using (SqlConnection sqlcon = new SqlConnection(conStr))
+            //{
+            //    sqlcon.Open();
+            //    SqlDataAdapter sqlDa = new SqlDataAdapter("select * from [Group]", sqlcon);
+            //    DataTable t = new DataTable();
+            //    sqlDa.Fill(t);
+            //    dataGridView1.DataSource = t;
 
-            }
+            //}
         }
 
         private void dateTimePicker1_ValueChanged(object sender, EventArgs e)

@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Data.SqlClient;
+using System.Text.RegularExpressions;
 
 namespace ProjectA1
 {
@@ -73,7 +74,7 @@ namespace ProjectA1
 
             bool isExists = false;
             con.Open();
-            string query = "Select * from GroupEvaluation";
+            string query = "SELECT GroupId , count(GroupId) FROM GroupEvaluation group by GroupId having count(GroupId) >= 4 ";
             SqlCommand cmd = new SqlCommand(query, con);
             SqlDataReader dbr = cmd.ExecuteReader();
             while (dbr.Read())
@@ -82,7 +83,7 @@ namespace ProjectA1
                 if (id == Convert.ToString(dbr[0]))
                 {
                     isExists = true;
-                    MessageBox.Show("Group ID already exixts. Cannot add data again corresponding to that ID.");
+                    MessageBox.Show("Group ID has been evaluated already 5 times. Can't evaluate that Group ID again.");
                     comboBox1.SelectedItem = null;
 
                     break;
@@ -93,7 +94,7 @@ namespace ProjectA1
 
             bool isExistss = false;
             con.Open();
-            string query2 = "Select * from GroupEvaluation";
+            string query2 = "SELECT EvaluationId , count(EvaluationId) FROM GroupEvaluation group by EvaluationId having count(EvaluationId) >= MAX(GroupId) ";
             SqlCommand cmd2 = new SqlCommand(query2, con);
             SqlDataReader dbrr = cmd.ExecuteReader();
             while (dbrr.Read())
@@ -110,9 +111,28 @@ namespace ProjectA1
             }
             con.Close();
 
+            //con.Open();
+            //bool isExistsss = false;
+            //string query3 = "SELECT GroupId , count(EvaluationId) FROM GroupEvaluation group by EvaluationId having count(EvaluationId) >= 1 ";
+            //SqlCommand cmd3 = new SqlCommand(query3, con);
+            //SqlDataReader dbrrr = cmd.ExecuteReader();
+            //while (dbrrr.Read())
+            //{
+            //    string id = comboBox2.Text;
+            //    if (id == Convert.ToString(dbrrr[1]))
+            //    {
+            //        isExistss = true;
+            //        MessageBox.Show("Evaluation ID already exixts. Cannot add data again corresponding to that ID.");
+            //        comboBox2.SelectedItem = null;
+
+            //        break;
+            //    }
+            //}
+            //con.Close();
+
 
             con.Open();
-            if (!isExists && !isExistss)
+            if (!isExists && !isExistss /*&& !isExistsss*/)
             {
 
                 string query1 = "insert into GroupEvaluation( GroupId,EvaluationId, ObtainedMarks, EvaluationDate) values ( '" + comboBox1.Text + "' , '" + comboBox2.Text + "','" + textBox1.Text.ToString() + "','" + Convert.ToDateTime(dateTimePicker1.Value) + "') ";
@@ -121,7 +141,7 @@ namespace ProjectA1
                 try
                 {
                     dbr1 = cmd1.ExecuteReader();
-                    MessageBox.Show("saved");
+                    MessageBox.Show("Group Evaluation added successfully.");
                     comboBox1.SelectedItem = null;
                     comboBox2.SelectedItem = null;
                     textBox1.Text = "";
@@ -136,6 +156,28 @@ namespace ProjectA1
                     MessageBox.Show(es.Message);
                 }
             }
+            con.Close();
+
+            con.Open();
+            //SqlConnection con = new SqlConnection(conStr);
+            string query4 = "Select * from GroupEvaluation";
+            SqlCommand cmd4 = new SqlCommand(query4, con);
+
+            try
+            {
+                SqlDataAdapter da = new SqlDataAdapter();
+                da.SelectCommand = cmd4;
+                DataTable dt = new DataTable();
+                da.Fill(dt);
+                BindingSource source = new BindingSource();
+                source.DataSource = dt;
+                dataGridView1.DataSource = source;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+
             con.Close();
         }
 
@@ -200,8 +242,8 @@ namespace ProjectA1
 
             if (e.ColumnIndex == 4)
             {
-                comboBox1.Text = dataGridView1.Rows[e.RowIndex].Cells[0].FormattedValue.ToString();
-                comboBox2.Text = dataGridView1.Rows[e.RowIndex].Cells[1].FormattedValue.ToString();
+                //comboBox1.Text = dataGridView1.Rows[e.RowIndex].Cells[0].FormattedValue.ToString();
+                //comboBox2.Text = dataGridView1.Rows[e.RowIndex].Cells[1].FormattedValue.ToString();
                 textBox1.Text = dataGridView1.Rows[e.RowIndex].Cells[2].FormattedValue.ToString();
                 dateTimePicker1.Text = dataGridView1.Rows[e.RowIndex].Cells[3].FormattedValue.ToString();
 
@@ -212,10 +254,10 @@ namespace ProjectA1
         {
             SqlConnection conn = new SqlConnection(conStr);
             conn.Open();
-            string query = "update GroupEvaluation set GroupId = '" + this.comboBox1.Text + "' , EvaluationId = '" + this.comboBox2.Text + "', ObtainedMarks = '" + this.textBox1.Text + "', EvaluationDate = '" + (dateTimePicker1.Value) + "' ";
+            string query = "update GroupEvaluation set ObtainedMarks = '" + this.textBox1.Text + "', EvaluationDate = '" + (dateTimePicker1.Value) + "' ";
             SqlCommand cmd = new SqlCommand(query, conn);
             cmd.ExecuteNonQuery();
-            MessageBox.Show("Record is successfully edited.");
+            MessageBox.Show("Group Evaluation is edited successfully.");
             comboBox1.SelectedItem = null;
             comboBox2.SelectedItem = null;
             textBox1.Text = "";
@@ -242,6 +284,32 @@ namespace ProjectA1
             {
                 dateTimePicker1.Format = DateTimePickerFormat.Short;
             }
+        }
+
+        private void textBox1_TextChanged(object sender, EventArgs e)
+        {
+            string pattern = "^(?:100|[1-9]?[0-9])$";
+            if (Regex.IsMatch(textBox1.Text, pattern))
+            {
+                errorProvider1.Clear();
+            }
+            else
+            {
+                errorProvider1.SetError(this.textBox1, "Please Enter a valid number");
+                //MessageBox.Show("You must enter ontained marks btw 0 and 100.");
+                return;
+            }
+        }
+
+
+        private void Number_Only(object sender, KeyPressEventArgs e)
+        {
+            if (!char.IsControl(e.KeyChar) && !char.IsDigit(e.KeyChar))
+            {
+                e.Handled = true;
+            }
+
+
         }
     }
 }

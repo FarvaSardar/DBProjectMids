@@ -102,7 +102,7 @@ namespace ProjectA1
                 try
                 {
                     dbr1 = cmd1.ExecuteReader();
-                    MessageBox.Show("saved");
+                    MessageBox.Show("Person added successfully.");
                     textBox1.Text = "";
                     textBox2.Text = "";
                     textBox3.Text = "";
@@ -118,6 +118,29 @@ namespace ProjectA1
                     MessageBox.Show(es.Message);
                 }
             }
+            con.Close();
+
+            con.Open();
+            dataGridView1.Show();
+            //SqlConnection con = new SqlConnection(conStr);
+            string query = "Select * from Person";
+            SqlCommand cmd = new SqlCommand(query, con);
+
+            try
+            {
+                SqlDataAdapter da = new SqlDataAdapter();
+                da.SelectCommand = cmd;
+                DataTable dt = new DataTable();
+                da.Fill(dt);
+                BindingSource source = new BindingSource();
+                source.DataSource = dt;
+                dataGridView1.DataSource = source;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+
             con.Close();
         }
         
@@ -190,6 +213,7 @@ namespace ProjectA1
             else
             {
                 errorProvider1.SetError(this.textBox4, "Please Enter a valid Email");
+                //MessageBox.Show("You must enter a valid email.");
                 return;
             }
         }
@@ -393,6 +417,13 @@ namespace ProjectA1
         private void dataGridView1_CellContentClick_1(object sender, DataGridViewCellEventArgs e)
         {
 
+        }
+
+        private void linkLabel1_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            Main m = new Main();
+            m.Show();
+            this.Hide();
         }
     }
 }

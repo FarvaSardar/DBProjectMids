@@ -30,6 +30,7 @@ namespace ProjectA1
             // TODO: This line of code loads data into the 'projectADataSet3.Advisor' table. You can move, or remove it, as needed.
             //this.advisorTableAdapter.Fill(this.projectADataSet3.Advisor);
 
+
             SqlConnection con = new SqlConnection(conStr);
             string query = "select Id from Lookup  where Category = 'DESIGNATION' ";
             SqlCommand cmd = new SqlCommand(query, con);
@@ -57,7 +58,6 @@ namespace ProjectA1
             
 
             bool isExists = false;
-            //SqlConnection con = new SqlConnection(conStr);
             con.Open();
             string query = "Select * from Advisor";
             SqlCommand cmd = new SqlCommand(query, con);
@@ -68,7 +68,7 @@ namespace ProjectA1
                 if (id == Convert.ToString(dbr[0]))
                 {
                     isExists = true;
-                    MessageBox.Show("ID already exixts. Cannot add data again corresponding to that ID.");
+                    MessageBox.Show("Advisor ID already exixts. Cannot add data again corresponding to that ID.");
                     textBox1.Text="";
 
                     break;
@@ -86,7 +86,8 @@ namespace ProjectA1
                 try
                 {
                     dbr1 = cmd1.ExecuteReader();
-                    MessageBox.Show("saved");
+                    MessageBox.Show("Advisor added successfully.");
+
                     textBox1.Text = "";
                     comboBox2.SelectedItem = null;
                     textBox2.Text = "";
@@ -101,21 +102,17 @@ namespace ProjectA1
             }
             con.Close();
 
-        }
 
-
-
-        private void button2_Click(object sender, EventArgs e)
-        {
+            con.Open();
             dataGridView1.Show();
-            SqlConnection con = new SqlConnection(conStr);
-            string query = "Select * from Advisor";
-            SqlCommand cmd = new SqlCommand(query, con);
+            //SqlConnection con = new SqlConnection(conStr);
+            string query3 = "Select * from Advisor";
+            SqlCommand cmd3 = new SqlCommand(query3, con);
 
             try
             {
                 SqlDataAdapter da = new SqlDataAdapter();
-                da.SelectCommand = cmd;
+                da.SelectCommand = cmd3;
                 DataTable dt = new DataTable();
                 da.Fill(dt);
                 BindingSource source = new BindingSource();
@@ -126,6 +123,35 @@ namespace ProjectA1
             {
                 MessageBox.Show(ex.Message);
             }
+            con.Close();
+
+        }
+
+
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            //con.Open();
+            dataGridView1.Show();
+            SqlConnection con = new SqlConnection(conStr);
+            string query3 = "Select * from Advisor";
+            SqlCommand cmd3 = new SqlCommand(query3, con);
+
+            try
+            {
+                SqlDataAdapter da = new SqlDataAdapter();
+                da.SelectCommand = cmd3;
+                DataTable dt = new DataTable();
+                da.Fill(dt);
+                BindingSource source = new BindingSource();
+                source.DataSource = dt;
+                dataGridView1.DataSource = source;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+            con.Close();
         }
 
 
@@ -160,10 +186,8 @@ namespace ProjectA1
 
             if (e.ColumnIndex == 3)
             {
-                textBox1.Text = dataGridView1.Rows[e.RowIndex].Cells[0].FormattedValue.ToString();
                 comboBox2.Text = dataGridView1.Rows[e.RowIndex].Cells[1].FormattedValue.ToString();
                 textBox2.Text = dataGridView1.Rows[e.RowIndex].Cells[2].FormattedValue.ToString();
-
 
             }
         }
@@ -176,7 +200,6 @@ namespace ProjectA1
         private void dataGridView1_RowHeaderMouseClick(object sender, DataGridViewCellMouseEventArgs e)
         {
 
-            textBox1.Text = dataGridView1.Rows[e.RowIndex].Cells[0].Value.ToString();
             comboBox2.Text = dataGridView1.Rows[e.RowIndex].Cells[1].Value.ToString();
             textBox2.Text = dataGridView1.Rows[e.RowIndex].Cells[2].Value.ToString();
 
@@ -187,13 +210,11 @@ namespace ProjectA1
 
             SqlConnection conn = new SqlConnection(conStr);
             conn.Open();
-            string query = "update Advisor set Id = '" + this.textBox1.Text + "' , Salary= '"+ this.textBox2.Text +"'  ";
+            string query = "update Advisor set Salary= '" + this.textBox2.Text +"'  ";
             SqlCommand cmd = new SqlCommand(query, conn);
-            string query1 = "update ProjectAdvisor set AdvisorId = '" + this.textBox1.Text + "' ";
-            SqlCommand cmd1 = new SqlCommand(query1, conn);
-            cmd1.ExecuteNonQuery();
             cmd.ExecuteNonQuery();
-            MessageBox.Show("Record is successfully edited.");
+            MessageBox.Show("Record is updated successfully.");
+            textBox2.Text = "";
             using (SqlConnection sqlcon = new SqlConnection(conStr))
             {
                 sqlcon.Open();
@@ -242,6 +263,11 @@ namespace ProjectA1
         private void textBox1_TextChanged(object sender, EventArgs e)
         {
            
+        }
+
+        private void tableLayoutPanel2_Paint(object sender, PaintEventArgs e)
+        {
+
         }
     }
 }

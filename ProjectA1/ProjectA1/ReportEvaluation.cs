@@ -12,20 +12,29 @@ using iTextSharp.text;
 using iTextSharp.text.pdf;
 using System.IO;
 
+
 namespace ProjectA1
 {
-    public partial class ReportProject : Form
+    public partial class ReportEvaluation : Form
     {
-    public ReportProject()
+        public ReportEvaluation()
         {
             InitializeComponent();
         }
         string conStr = "Data Source=FARVASARDAR-PC\\FARVASQL;Initial Catalog=ProjectA;Integrated Security=True";
 
+
+        private void linkLabel1_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            Main m = new Main();
+            m.Show();
+            this.Hide();
+        }
+
         private void bindgrid()
         {
             SqlConnection con = new SqlConnection(conStr);
-            string query1 = "Select GroupProject.ProjectId as ProjectId , ProjectAdvisor.AdvisorId, ProjectAdvisor.AdvisorRole, GroupStudent.StudentId from(GroupStudent join (GroupProject join ProjectAdvisor on GroupProject.ProjectId = ProjectAdvisor.ProjectId)on GroupStudent.GroupId= GroupProject.GroupId )";
+            string query1 = "Select  GroupProject.ProjectId, GroupStudent.StudentId, GroupEvaluation.EvaluationId ,GroupEvaluation.ObtainedMarks from(GroupStudent join (GroupProject join GroupEvaluation on GroupProject.GroupId = GroupEvaluation.GroupId)on GroupStudent.GroupId= GroupProject.GroupId )";
             SqlCommand cmd1 = new SqlCommand(query1, con);
 
             try
@@ -44,13 +53,10 @@ namespace ProjectA1
             }
         }
 
-
-
-        private void Report_Load(object sender, EventArgs e)
+        private void ReportEvaluation_Load(object sender, EventArgs e)
         {
             bindgrid();
         }
-
 
 
         public void exportgridtopdf(DataGridView d, string filename)
@@ -102,17 +108,14 @@ namespace ProjectA1
             }
         }
 
-
         private void button1_Click(object sender, EventArgs e)
         {
-            exportgridtopdf(dataGridView1, "Report Projects");
+            exportgridtopdf(dataGridView1, "Report Evaluations");
         }
 
-        private void linkLabel1_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
-            Main m = new Main();
-            m.Show();
-            this.Hide();
+
         }
     }
 }

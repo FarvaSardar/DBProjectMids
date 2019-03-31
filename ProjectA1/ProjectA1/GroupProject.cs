@@ -120,7 +120,7 @@ namespace ProjectA1
                 try
                 {
                     dbr1 = cmd1.ExecuteReader();
-                    MessageBox.Show("saved");
+                    MessageBox.Show("Group Project is added successfully.");
                     comboBox1.SelectedItem = null;
                     comboBox2.SelectedItem = null;
                     dateTimePicker1.Value = DateTimePicker.MinimumDateTime;
@@ -134,7 +134,28 @@ namespace ProjectA1
                 }
             }
             con.Close();
-            
+
+            con.Open();
+            dataGridView1.Show();
+            //SqlConnection con = new SqlConnection(conStr);
+            string query = "Select * from GroupProject";
+            SqlCommand cmd = new SqlCommand(query, con);
+
+            try
+            {
+                SqlDataAdapter da = new SqlDataAdapter();
+                da.SelectCommand = cmd;
+                DataTable dt = new DataTable();
+                da.Fill(dt);
+                BindingSource source = new BindingSource();
+                source.DataSource = dt;
+                dataGridView1.DataSource = source;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+
         }
 
         private void linkLabel1_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
@@ -174,7 +195,7 @@ namespace ProjectA1
             int Id1 = Convert.ToInt32(dataGridView1.Rows[e.RowIndex].Cells[0].Value);
             int Id2 = Convert.ToInt32(dataGridView1.Rows[e.RowIndex].Cells[1].Value);
 
-            if (e.ColumnIndex == 4)
+            if (e.ColumnIndex == 3)
             {
                 if (MessageBox.Show("Are you sure you want to delete this record?", "Message", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
                 {
@@ -194,38 +215,29 @@ namespace ProjectA1
                 }
             }
 
-            if (e.ColumnIndex == 3)
-            {
-                comboBox1.Text = dataGridView1.Rows[e.RowIndex].Cells[0].FormattedValue.ToString();
-                comboBox2.Text = dataGridView1.Rows[e.RowIndex].Cells[1].FormattedValue.ToString();
-                dateTimePicker1.Text = dataGridView1.Rows[e.RowIndex].Cells[2].FormattedValue.ToString();
-
-            }
         }
 
         private void button3_Click(object sender, EventArgs e)
         {
-            SqlConnection conn = new SqlConnection(conStr);
-            conn.Open();
-            string query = "update GroupProject set ProjectId = '" + this.comboBox1.Text + "' , GroupId = '" + this.comboBox2.Text + "', AssignmentDate = '" + (dateTimePicker1.Value) + "' ";
-            SqlCommand cmd = new SqlCommand(query, conn);
-            cmd.ExecuteNonQuery();
-            MessageBox.Show("Record is successfully edited.");
+            //SqlConnection conn = new SqlConnection(conStr);
+            //conn.Open();
+            //string query = "update GroupProject set ProjectId = '" + this.comboBox1.Text + "' , GroupId = '" + this.comboBox2.Text + "', AssignmentDate = '" + (dateTimePicker1.Value) + "' ";
+            //SqlCommand cmd = new SqlCommand(query, conn);
+            //cmd.ExecuteNonQuery();
+            //MessageBox.Show("Record is successfully edited.");
 
-            comboBox1.SelectedItem = null;
-            comboBox2.SelectedItem = null;
-            dateTimePicker1.Value = DateTimePicker.MinimumDateTime;
-            using (SqlConnection sqlcon = new SqlConnection(conStr))
-            {
-                sqlcon.Open();
-                SqlDataAdapter sqlDa = new SqlDataAdapter("select * from GroupProject", sqlcon);
-                DataTable t = new DataTable();
-                sqlDa.Fill(t);
-                dataGridView1.DataSource = t;
+            //comboBox1.SelectedItem = null;
+            //comboBox2.SelectedItem = null;
+            //dateTimePicker1.Value = DateTimePicker.MinimumDateTime;
+            //using (SqlConnection sqlcon = new SqlConnection(conStr))
+            //{
+            //    sqlcon.Open();
+            //    SqlDataAdapter sqlDa = new SqlDataAdapter("select * from GroupProject", sqlcon);
+            //    DataTable t = new DataTable();
+            //    sqlDa.Fill(t);
+            //    dataGridView1.DataSource = t;
 
-            }
-
-
+            //}
 
         }
 

@@ -74,23 +74,23 @@ namespace ProjectA1
             SqlConnection con = new SqlConnection(conStr);
 
 
-            //bool isExistsss = false;
-            //con.Open();
-            //string query4 = "SELECT GroupId  FROM GroupStudent HAVING COUNT(GroupId) < 3; ";
-            //SqlCommand cmd4 = new SqlCommand(query4, con);
-            //SqlDataReader db = cmd4.ExecuteReader();
-            //while (db.Read())
-            //{
-            //    string id = comboBox1.Text;
-            //    if (id == Convert.ToString(db[0]))
-            //    {
-            //        isExistsss = true;
-            //        MessageBox.Show("Group ID already exixts 3 times. Cannot add data again corresponding to that ID.");
-            //        comboBox1.SelectedItem = null;
-            //        break;
-            //    }
-            //}
-            //con.Close();
+            bool isExistsss = false;
+            con.Open();
+            string query4 = "SELECT GroupId , count(GroupId) FROM GroupStudent group by GroupId having count(GroupId) >= 3 ; ";
+            SqlCommand cmd4 = new SqlCommand(query4, con);
+            SqlDataReader db = cmd4.ExecuteReader();
+            while (db.Read())
+            {
+                string id = comboBox1.Text;
+                if (id == Convert.ToString(db[0]))
+                {
+                    isExistsss = true;
+                    MessageBox.Show("Group ID already exixts 3 times. Cannot add data again corresponding to that ID.");
+                    comboBox1.SelectedItem = null;
+                    break;
+                }
+            }
+            con.Close();
 
 
             bool isExistss = false;
@@ -114,7 +114,7 @@ namespace ProjectA1
 
 
             con.Open();
-            if (!isExistss /*&& !isExistsss*/)
+            if (!isExistss && !isExistsss)
             {
                 string query1 = "insert into GroupStudent(GroupId, StudentId , Status, AssignmentDate) values ( '" + comboBox1.Text + "' , '" + comboBox2.Text + "' ,(select Id from Lookup where Value= '" + comboBox3.Text + "' ),  '" + (dateTimePicker1.Value) + "') ";
                 SqlCommand cmd1 = new SqlCommand(query1, con);
@@ -122,7 +122,7 @@ namespace ProjectA1
                 try
                 {
                     dbr1 = cmd1.ExecuteReader();
-                    MessageBox.Show("saved");
+                    MessageBox.Show("Group Student added successfullly.");
                     comboBox1.SelectedItem = null;
                     comboBox2.SelectedItem = null;
                     comboBox3.SelectedItem = null;
@@ -137,6 +137,30 @@ namespace ProjectA1
                 }
             }
             con.Close();
+
+
+
+            con.Open();
+            dataGridView1.Show();
+            //SqlConnection con = new SqlConnection(conStr);
+            string query = "Select * from GroupStudent";
+            SqlCommand cmd = new SqlCommand(query, con);
+
+            try
+            {
+                SqlDataAdapter da = new SqlDataAdapter();
+                da.SelectCommand = cmd;
+                DataTable dt = new DataTable();
+                da.Fill(dt);
+                BindingSource source = new BindingSource();
+                source.DataSource = dt;
+                dataGridView1.DataSource = source;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+
         }
 
         private void label4_Click(object sender, EventArgs e)
@@ -204,7 +228,7 @@ namespace ProjectA1
 
             if (e.ColumnIndex == 4)
             {
-                comboBox1.Text = dataGridView1.Rows[e.RowIndex].Cells[0].FormattedValue.ToString();
+                //comboBox1.Text = dataGridView1.Rows[e.RowIndex].Cells[0].FormattedValue.ToString();
                 comboBox2.Text = dataGridView1.Rows[e.RowIndex].Cells[1].FormattedValue.ToString();
                 comboBox3.Text = dataGridView1.Rows[e.RowIndex].Cells[2].FormattedValue.ToString();
                 dateTimePicker1.Text = dataGridView1.Rows[e.RowIndex].Cells[3].FormattedValue.ToString();
@@ -216,10 +240,10 @@ namespace ProjectA1
         {
             SqlConnection conn = new SqlConnection(conStr);
             conn.Open();
-            string query = "update GroupStudent set GroupId = '" + this.comboBox1.Text + "' , StudentId = '" + this.comboBox2.Text + "', Status = (select Id from Lookup where value = '" + comboBox3.Text + "'),  AssignmentDate = '"+(dateTimePicker1.Value)+"' ";
+            string query = "update GroupStudent set StudentId = '"+comboBox2.Text +"' , Status = (select Id from Lookup where value = '" + comboBox3.Text + "'),  AssignmentDate = '"+(dateTimePicker1.Value)+"' ";
             SqlCommand cmd = new SqlCommand(query, conn);
             cmd.ExecuteNonQuery();
-            MessageBox.Show("Record is successfully edited.");
+            MessageBox.Show("Record is updated successfully.");
 
             comboBox1.SelectedItem = null;
             comboBox2.SelectedItem = null;

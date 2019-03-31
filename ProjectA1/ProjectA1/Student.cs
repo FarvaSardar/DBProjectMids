@@ -280,7 +280,14 @@ namespace ProjectA1
 
         private void textBox1_TextChanged_1(object sender, EventArgs e)
         {
-            textBox1.MaxLength = 13;
+            //textBox1.MaxLength = 13;
+        }
+
+        private void linkLabel1_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            Main m = new Main();
+            m.Show();
+            this.Hide();
         }
     }
 }

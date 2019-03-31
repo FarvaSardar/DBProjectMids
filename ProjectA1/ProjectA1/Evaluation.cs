@@ -59,7 +59,7 @@ namespace ProjectA1
                 try
                 {
                     dbr1 = cmd1.ExecuteReader();
-                    MessageBox.Show("saved");
+                    MessageBox.Show("Evaluation added successfully.");
                     textBox1.Text = "";
                     textBox2.Text = "";
                     textBox3.Text = "";
@@ -73,6 +73,26 @@ namespace ProjectA1
                 }
             }
             con.Close();
+
+            con.Open();
+            //SqlConnection con = new SqlConnection(conStr);
+            string query = "Select * from Evaluation";
+            SqlCommand cmd = new SqlCommand(query, con);
+
+            try
+            {
+                SqlDataAdapter da = new SqlDataAdapter();
+                da.SelectCommand = cmd;
+                DataTable dt = new DataTable();
+                da.Fill(dt);
+                BindingSource source = new BindingSource();
+                source.DataSource = dt;
+                dataGridView1.DataSource = source;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
         }
 
         private void button2_Click(object sender, EventArgs e)
@@ -207,29 +227,49 @@ namespace ProjectA1
 
         private void textBox2_TextChanged(object sender, EventArgs e)
         {
-            //textBox2.MaxLength = 3;
+            string pattern = "^(?:100|[1-9]?[0-9])$";
+            if (Regex.IsMatch(textBox2.Text, pattern))
+            {
+                errorProvider1.Clear();
+            }
+            else
+            {
+                errorProvider1.SetError(this.textBox2, "Please Enter a valid number");
+                //MessageBox.Show("You must enter a number between 0 and 100.");
+                return;
+            }
         }
 
 
-        private void Validate_Text(object sender, CancelEventArgs e)
+        private void Validate_Text1(object sender, CancelEventArgs e)
         {
-            TextBox tb = sender as TextBox;
-            if (tb != null)
-            {
-                int i;
-                if (int.TryParse(tb.Text, out i))
-                {
-                    if (i >= 0 && i <= 99)
-                        return;
-                }
-            }
-            MessageBox.Show("invalid input");
-            e.Cancel = true;
+            //TextBox tb = sender as TextBox;
+            //if (tb != null)
+            //{
+            //    int i;
+            //    if (int.TryParse(tb.Text, out i))
+            //    {
+            //        if (i >= 0 && i <= 99)
+            //            return;
+            //    }
+            //}
+            //MessageBox.Show("You can enter percentage only between 0 and 100.");
+            //e.Cancel = true;
         }
 
         private void textBox3_TextChanged(object sender, EventArgs e)
         {
-            //textBox3.MaxLength = 3;
+            string pattern = "^(?:100|[1-9]?[0-9])$";
+            if (Regex.IsMatch(textBox2.Text, pattern))
+            {
+                errorProvider1.Clear();
+            }
+            else
+            {
+                errorProvider1.SetError(this.textBox2, "Please Enter a valid percentage");
+                //MessageBox.Show("You must enter a number between 0 and 100.");
+                return;
+            }
         }
     }
 }

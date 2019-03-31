@@ -151,6 +151,12 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>ProjectDataSet.xsd</DependentUpon>
     </Compile>
+    <Compile Include="ReportEvaluation.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ReportEvaluation.Designer.cs">
+      <DependentUpon>ReportEvaluation.cs</DependentUpon>
+    </Compile>
     <Compile Include="ReportProject.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -213,6 +219,9 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <EmbeddedResource Include="ReportEvaluation.resx">
+      <DependentUpon>ReportEvaluation.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="ReportProject.resx">
       <DependentUpon>ReportProject.cs</DependentUpon>
     </EmbeddedResource>
